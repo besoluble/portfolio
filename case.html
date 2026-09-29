@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Case — Eunsol Jang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,450;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+/* ─────────────────────────────────────────────────────────────
+   CASE
+   The facts hold still; the work scrolls past them. On a narrow
+   screen the same information collapses into a sticky bar and the
+   reel runs underneath.
+   ───────────────────────────────────────────────────────────── */
+
+.case {
+  max-width: 1280px; margin: 0 auto; padding: var(--s7) var(--s5) var(--gap-sect);
+  display: grid; grid-template-columns: 340px minmax(0, 1fr);
+  gap: var(--s8); align-items: start;
+}
+.case.text-only { max-width: 760px; grid-template-columns: minmax(0, 1fr); }
+.case.text-only .info { position: static; max-height: none; overflow: visible; }
+@media (max-width: 940px) { .case { grid-template-columns: 1fr; gap: var(--s5); padding-top: 0; } }
+
+/* ── Sticky bar, narrow screens only ──────────────────────── */
+
+.topbar {
+  display: none;
+  position: sticky; top: 0; z-index: 10;
+  align-items: center; gap: var(--s3);
+  padding: var(--s3) var(--s5);
+  margin: 0 calc(var(--s5) * -1) var(--s4);
+  background: color-mix(in oklch, var(--bg) 86%, transparent);
+  backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--rule-soft);
+}
+@media (max-width: 940px) { .topbar { display: flex; } }
+.topbar .t { font-size: var(--t-sm); font-weight: 500; letter-spacing: var(--tr-md); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.topbar .mono { margin-left: auto; flex: none; }
+
+/* ── Info column ──────────────────────────────────────────── */
+
+.info {
+  position: sticky; top: var(--s7);
+  max-height: calc(100dvh - var(--s7) * 2);
+  overflow-y: auto;
+  /* Scrollable, but without the permanent gutter. On a machine set to
+     "always show scrollbars" this column would otherwise carry a bar the
+     whole time for the sake of a few overflowing pixels. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.info::-webkit-scrollbar { width: 0; height: 0; display: none; }
+@media (max-width: 940px) { .info { position: static; max-height: none; overflow: visible; } }
+
+.back {
+  display: inline-flex; align-items: center; gap: 6px; margin-bottom: var(--gap-block);
+  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--ink-faint); text-decoration: none;
+  transition: color var(--fast) var(--ease);
+}
+.back:hover { color: var(--ink); }
+.back svg { width: 10px; height: 10px; transition: transform var(--slow) var(--ease); }
+.back:hover svg { transform: translateX(-2px); }
+
+.kicker { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 var(--s2); }
+.info h1 { margin: 0; font-size: var(--t-xl); font-weight: 600; letter-spacing: var(--tr-lg); line-height: var(--lh-snug); }
+.info .blurb { margin: var(--s4) 0 0; font-size: var(--t-sm); line-height: var(--lh-prose); color: var(--ink-muted); }
+.info .blurb + .blurb { margin-top: var(--gap-para); }
+
+.info dl {
+  display: grid; grid-template-columns: auto 1fr; gap: 6px var(--s4);
+  margin: var(--gap-block) 0 0;
+  font-family: var(--mono); font-size: var(--t-xs); font-variant-numeric: tabular-nums;
+  line-height: var(--lh-snug);
+}
+.info dt { color: var(--ink-faint); white-space: nowrap; }
+.info dd { margin: 0; color: var(--ink); }
+
+.progress {
+  margin-top: var(--gap-block); padding-top: var(--s3); border-top: 1px solid var(--rule-soft);
+  font-family: var(--mono); font-size: var(--t-xs); font-variant-numeric: tabular-nums; color: var(--ink-faint);
+  display: flex; align-items: center; gap: var(--s3);
+}
+.progress .track { flex: 1; height: 1px; background: var(--rule); position: relative; }
+.progress .track i { position: absolute; inset: 0 auto 0 0; background: var(--accent); transition: width 0.25s var(--ease); width: 0; }
+@media (max-width: 940px) { .progress { display: none; } }
+
+.jump { display: flex; flex-direction: column; gap: var(--s1); margin-top: var(--gap-block); padding-top: var(--s3); border-top: 1px solid var(--rule-soft); }
+.jump a {
+  display: grid; grid-template-columns: 56px minmax(0, 1fr);
+  gap: var(--s3); align-items: center;
+  padding: var(--s2); margin: 0 calc(var(--s2) * -1);
+  border-radius: var(--r-row); text-decoration: none; color: inherit;
+  transition: background-color var(--fast) var(--ease);
+}
+.jump a:hover { background: var(--wash); }
+.jump .media { aspect-ratio: 16 / 10; }
+.jump .media img { width: 100%; height: 100%; object-fit: cover; }
+.jump .txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.jump .lbl { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
+.jump .nm {
+  font-size: var(--t-sm); color: var(--ink-muted); line-height: var(--lh-snug);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: color var(--fast) var(--ease);
+}
+.jump a:hover .nm { color: var(--ink); }
+
+/* ── Track switch ─────────────────────────────────────────── */
+/* Same project, two readings. Sits above the reel because that is the only
+   thing it changes — the facts on the left hold still. */
+
+.tracks { display: flex; align-items: center; gap: var(--s2); margin-bottom: var(--s4); scroll-margin-top: var(--s5); }
+/* The purpose is said once in the label, so each chip can stay short. */
+.tracks .label {
+  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--ink-faint); margin-right: var(--s2);
+}
+.tracks button {
+  appearance: none; cursor: pointer;
+  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--ink-faint); background: transparent;
+  border: 1px solid var(--rule-soft); border-radius: var(--r-chip);
+  padding: 4px var(--s3);
+  transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease), background-color var(--fast) var(--ease);
+}
+.tracks button:hover { color: var(--ink); border-color: var(--rule); }
+.tracks button[aria-pressed="true"] { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+
+/* ── The reel ─────────────────────────────────────────────── */
+
+.reel { display: flex; flex-direction: column; gap: var(--gap-block); }
+.reel figure { margin: 0; }
+.reel .media { border-radius: var(--r-panel); }
+
+/* Uncaptioned work is one continuous piece: no gap, no radius, no hairline
+   between frames. Only the outer corners of the whole stack stay rounded. */
+.reel.flow { gap: 0; }
+.reel.flow .media { border-radius: 0; box-shadow: none; }
+/* of-type, not child — a track may put a note above the frames. */
+.reel.flow figure:first-of-type .media { border-radius: var(--r-panel) var(--r-panel) 0 0; }
+.reel.flow figure:last-of-type .media { border-radius: 0 0 var(--r-panel) var(--r-panel); }
+
+/* Artwork that is not 16:9 — an emblem, a square photo — sits centred inside
+   a normal frame instead of stretching the column. Keeps the scroll rhythm. */
+.reel .media.fit, .lb .media.fit {
+  aspect-ratio: 16 / 9;
+  background: oklch(100% 0 0);
+  display: grid; place-items: center;
+  padding: clamp(var(--s5), 5%, var(--s8));
+}
+.reel .media.fit img, .reel .media.fit video,
+.lb .media.fit img, .lb .media.fit video {
+  width: auto; height: auto;
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+  aspect-ratio: auto;
+}
+
+/* A note that introduces the frames under it. */
+.reel .lead {
+  margin: 0 0 var(--s4);
+  font-size: var(--t-sm); line-height: var(--lh-prose);
+  color: var(--ink-muted); max-width: 44rem; text-wrap: pretty;
+}
+/* Insurance against a fractional-boundary hairline, not the fix for one.
+   The seam that showed here was a white row baked into the top of the JPEGs
+   by pdftoppm; that is fixed in the assets. This overlap hides the previous
+   frame's last row, which is the wrong edge for that bug — worth keeping only
+   because it costs 0.2% of a frame and closes any subpixel gap.
+   (.group-start carries more classes, so its spacing still wins.) */
+.reel.flow figure + figure { margin-top: -1px; }
+/* Only a standalone off-ratio clip needs air; a 16:9 one lines up with the
+   slides, and one paired into a row has to fill its own half. */
+.reel.flow figure:has(video.tall):not(.row) { padding: var(--s6) 0; }
+/* The motion pieces sit as their own block at the end of the run. */
+.reel.flow figure.group-start, .lb.flow figure.group-start { margin-top: var(--s7); }
+
+/* Halves that were composed as one screen. No gap — they are one image. */
+.reel figure.row .pair, .lb figure.row .pair {
+  display: grid; grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr));
+}
+.reel figure.row .pair > * { min-width: 0; }
+/* Inside a row the ratio cap does not apply — each half fills its column. */
+.reel figure.row video.tall, .lb figure.row video.tall { max-width: 100%; margin-inline: 0; }
+.reel img, .reel video { width: 100%; height: auto; display: block; }
+/* Before metadata arrives a <video> reports 300×150, so height:auto collapses
+   it to a 150px strip and the layout jumps once it loads. Reserving 16:9 up
+   front holds the box; JS replaces this with the real ratio on loadedmetadata. */
+.reel video, .lb video { aspect-ratio: 16 / 9; }
+/* Five of the six clips are 1920×1080, the same frame as the slides, so they
+   run at full column width and butt against them seamlessly. Only a clip that
+   is far from 16:9 gets held back — measured from the file, not assumed. */
+.reel video.tall { max-width: 620px; margin-inline: auto; }
+.reel figcaption {
+  margin-top: var(--s3); font-size: var(--t-sm); line-height: var(--lh-prose);
+  color: var(--ink-muted); max-width: 44rem; text-wrap: pretty;
+}
+.reel figcaption .n {
+  font-family: var(--mono); font-size: var(--t-xs); font-variant-numeric: tabular-nums;
+  color: var(--ink-faint); margin-right: var(--s2);
+}
+
+/* A tall poster reads better at its natural scale with the project note beside
+   it, instead of stretching across the full reel width. */
+.reel.poster-note figure {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.56fr) minmax(220px, 0.44fr);
+  gap: var(--s5);
+  align-items: start;
+}
+.reel.poster-note .media {
+  width: min(100%, 440px);
+  justify-self: end;
+}
+/* The part that did not work. Folded, hairline-separated, same mono voice as
+   the rest of the furniture — present without competing with the result. */
+.more { border-top: 1px solid var(--rule); padding-top: var(--s5); }
+.more > summary {
+  list-style: none; cursor: pointer; display: inline-flex;
+  align-items: center; gap: var(--s2);
+  font-family: var(--mono); font-size: var(--t-xs);
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--ink-muted); transition: color 0.15s var(--ease);
+}
+.more > summary::-webkit-details-marker { display: none; }
+.more > summary:hover { color: var(--ink); }
+/* A plus that loses its upright stroke when the block opens. */
+.more .mk { position: relative; width: 9px; height: 9px; flex: none; }
+.more .mk::before, .more .mk::after {
+  content: ""; position: absolute; background: currentColor;
+  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.more .mk::before { inset: 4px 0; height: 1px; }
+.more .mk::after { inset: 0 4px; width: 1px; }
+.more[open] .mk::after { transform: rotate(90deg); opacity: 0; }
+.more-body {
+  display: flex; flex-direction: column; gap: var(--s5);
+  margin-top: var(--s5);
+}
+.more-body .note {
+  margin: 0; font-size: var(--t-sm); line-height: var(--lh-prose);
+  color: var(--ink-muted); max-width: 44rem; text-wrap: pretty;
+}
+
+.reel.poster-note figcaption {
+  margin-top: 0;
+  max-width: none;
+}
+@media (max-width: 640px) {
+  .reel.poster-note figure { grid-template-columns: 1fr; gap: var(--s4); }
+  .reel.poster-note .media { width: min(100%, 420px); justify-self: center; }
+}
+
+/* Each frame is a button, so the full-screen view is reachable by keyboard
+   and not just by mouse. */
+.shot {
+  appearance: none; border: 0; padding: 0; margin: 0; width: 100%;
+  cursor: zoom-in; color: inherit; font: inherit;
+}
+/* Shows which source a frame came from — the vocabulary needed to say
+   "this one is a duplicate". Hover only, so the seamless run stays clean. */
+.shot .zoom {
+  position: absolute; right: var(--s3); bottom: var(--s3); z-index: 2;
+  height: 24px; padding: 0 var(--s2); border-radius: var(--r-chip);
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.02em;
+  color: oklch(100% 0 0); background: oklch(0% 0 0 / 0.55);
+  backdrop-filter: blur(6px);
+  opacity: 0; transform: translateY(3px);
+  transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease);
+}
+.shot .zoom svg { width: 12px; height: 12px; flex: none; }
+.shot:hover .zoom, .shot:focus-visible .zoom { opacity: 1; transform: none; }
+
+/* ── Full screen ──────────────────────────────────────────── */
+
+.lb {
+  border: 0; padding: 0; margin: 0;
+  position: fixed; inset: 0;
+  width: 100vw; height: 100dvh; max-width: 100vw; max-height: 100dvh;
+  overflow: hidden;
+  /* The dialog carries its own dark ground rather than leaning on ::backdrop,
+     which does not composite everywhere. ::backdrop is kept as a second coat.
+     Near-solid on purpose: nothing behind should compete with the work. */
+  background: oklch(13% 0.012 258 / 0.97);
+}
+/* Scope layout to [open]. A bare `display` on the dialog would beat the UA's
+   `dialog:not([open]) { display: none }` and leave this panel covering the
+   page from the moment it loads. */
+.lb[open] { display: flex; flex-direction: column; }
+.lb::backdrop { background: oklch(13% 0.012 258 / 0.9); }
+
+.lb .bar {
+  flex: none; z-index: 3;
+  display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s3) var(--s5);
+  color: oklch(100% 0 0 / 0.75);
+  border-bottom: 1px solid oklch(100% 0 0 / 0.08);
+}
+.lb .bar .mono { color: inherit; flex: none; }
+.lb .ttl { font-size: var(--t-sm); font-weight: 500; letter-spacing: var(--tr-md); color: oklch(100% 0 0 / 0.6); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb .spacer { flex: 1; }
+.lb .hintkeys { font-family: var(--mono); font-size: var(--t-xs); color: oklch(100% 0 0 / 0.4); letter-spacing: 0.04em; flex: none; }
+@media (max-width: 820px) { .lb .hintkeys, .lb .ttl { display: none; } }
+
+/* The whole reel scrolls inside the dialog, the way you would scan a deck. */
+.lb .scroll {
+  flex: 1; overflow-y: auto; overscroll-behavior: contain;
+  padding: var(--s5) var(--s5) var(--s8);
+  scrollbar-width: thin; scrollbar-color: oklch(100% 0 0 / 0.25) transparent;
+}
+.lb .scroll::-webkit-scrollbar { width: 9px; }
+.lb .scroll::-webkit-scrollbar-thumb { background: oklch(100% 0 0 / 0.22); border-radius: 999px; }
+.lb .scroll::-webkit-scrollbar-track { background: transparent; }
+
+.lb .strip { max-width: 1500px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--s6); }
+.lb.flow .strip { gap: 0; }
+.lb.flow img { border-radius: 0; }
+.lb.flow figure:first-child img { border-radius: var(--r-chip) var(--r-chip) 0 0; }
+.lb.flow figure:last-child img { border-radius: 0 0 var(--r-chip) var(--r-chip); }
+.lb.flow figure + figure { margin-top: -1px; }
+.lb.flow figure:has(video.tall) { padding: var(--s6) 0; }
+.lb figure { margin: 0; scroll-margin-top: var(--s4); }
+.lb img, .lb video { width: 100%; height: auto; display: block; border-radius: var(--r-chip); }
+.lb video.tall { max-width: 700px; margin-inline: auto; }
+.lb figcaption {
+  margin-top: var(--s3); font-size: var(--t-sm); line-height: var(--lh-prose);
+  color: oklch(100% 0 0 / 0.58); max-width: 52rem; text-wrap: pretty;
+}
+.lb figcaption .n { font-family: var(--mono); font-size: var(--t-xs); font-variant-numeric: tabular-nums; opacity: 0.6; margin-right: var(--s2); }
+
+.lb button {
+  appearance: none; border: 0; cursor: pointer; flex: none;
+  background: oklch(100% 0 0 / 0.10); color: oklch(100% 0 0);
+  border-radius: 999px; display: grid; place-items: center;
+  transition: background-color var(--fast) var(--ease);
+}
+.lb button:hover { background: oklch(100% 0 0 / 0.2); }
+.lb button:focus-visible { outline: 2px solid oklch(100% 0 0); outline-offset: 3px; }
+.lb .icon { width: 32px; height: 32px; }
+.lb .icon svg { width: 14px; height: 14px; }
+
+html.lb-open { overflow: hidden; }
+
+/* External links — one work can point at several places. */
+.exts { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s2); }
+.exts:not(:empty) { margin-top: var(--gap-block); }
+.ext {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none;
+  border-bottom: 1px solid var(--rule); padding-bottom: 2px; align-self: flex-start;
+  transition: border-color var(--fast) var(--ease);
+}
+.ext:hover { border-color: var(--ink); }
+.ext svg { width: 10px; height: 10px; transition: transform var(--slow) var(--ease); }
+.ext:hover svg { transform: translate(1px, -1px); }
+
+.blank {
+  border: 1px dashed var(--rule); border-radius: var(--r-panel);
+  padding: var(--s8) var(--s5); text-align: center;
+}
+.blank p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); }
+.blank .mono { display: block; margin-bottom: var(--s2); }
+
+.end {
+  margin-top: var(--gap-sect); padding-top: var(--s4); border-top: 1px solid var(--rule-soft);
+  display: flex; justify-content: space-between; gap: var(--s4); flex-wrap: wrap;
+  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-faint);
+}
+.end a { color: inherit; text-decoration: none; }
+.end a:hover { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="case">
+
+  <header class="topbar">
+    <a class="back" href="index.html" style="margin:0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+      Work
+    </a>
+    <span class="t" id="barTitle"></span>
+    <span class="mono" id="barCount"></span>
+  </header>
+
+  <div class="info">
+    <a class="back" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+      All work
+    </a>
+    <p class="kicker" id="kicker"></p>
+    <h1 id="title"></h1>
+    <div id="blurbs"></div>
+    <dl id="facts"></dl>
+    <div class="exts" id="exts"></div>
+    <div class="progress" id="progress">
+      <span id="pCount">01 / 01</span>
+      <span class="track"><i></i></span>
+    </div>
+    <nav class="jump" id="jump" aria-label="Other work"></nav>
+  </div>
+
+  <div>
+    <div class="tracks" id="tracks" role="group" aria-label="View" hidden>
+      <span class="label">View</span>
+    </div>
+    <main class="reel" id="reel"></main>
+  </div>
+
+</div>
+
+<dialog class="lb" id="lb" aria-label="Full screen view">
+  <div class="bar">
+    <span class="mono" id="lbCount">01 / 01</span>
+    <span class="ttl" id="lbTitle"></span>
+    <span class="spacer"></span>
+    <span class="hintkeys">scroll &nbsp;·&nbsp; ↑ ↓ frame &nbsp;·&nbsp; F full screen &nbsp;·&nbsp; Esc close</span>
+    <button class="icon" id="lbFull" type="button" aria-label="Toggle browser full screen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H4v5M15 20h5v-5M20 9V4h-5M4 15v5h5"/></svg>
+    </button>
+    <button class="icon" id="lbClose" type="button" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <div class="scroll" id="lbScroll"><div class="strip" id="lbStrip"></div></div>
+</dialog>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  try { var s = localStorage.getItem("theme"); if (s === "light" || s === "dark") root.setAttribute("data-theme", s); } catch (e) {}
+
+  var ORDER = ["moonlight","cheongun","clap","turnbler","gimhae","signifier","wholesome","faco","board","anseong","frankfurt","riso","kkol","thonik","rural","cookfest"];
+
+  var WORK = {
+    moonlight: {
+      kicker: "Brand identity \u00b7 product \u00b7 shipped",
+      title: "Moonlight Logo Renewal",
+      blurbs: [
+        "The old mark carried the product\u2019s origin story \u2014 someone crossing a moonlit desert toward an oasis. It said where the name came from, which is a different question from what the product does for the researcher using it.",
+        "Moonlight exists to help researchers grow into ones who can stand on their own, so the mark had to answer what it does beside the researcher rather than where its name came from. The moon and the light stay; the narrative props go. What is left is a full moon\u2019s steady circle, light spreading in the dark, and a curve soft enough never to get ahead of the person it is lighting the way for.",
+        "Simplifying the form is also what lets it hold at every size it has to survive \u2014 an app icon, a favicon, a landing page, a proposal deck, a piece of merchandise."
+      ],
+      facts: [["Year","2026"],["Role","Brand identity"],["Scope","Product, marketing, documents"],["Status","Shipped"]],
+      flow: true,
+      frames: [
+        "moonlight/intro-3.png",
+        "moonlight/intro-1.png",
+        "moonlight/intro-2.png",
+        // The App Store shot is 1:2, and the dock still and the motion clip are
+        // both squares \u2014 stacking those two makes a 1:2 column that pairs with
+        // it exactly, which is how the two sat together in the source deck.
+        { row: ["moonlight/mockup-1.png","moonlight/mockup-right.mp4"] }
+      ]
+    },
+    cheongun: {
+      kicker: "Brand identity · personal work",
+      title: "Cheong-un Literature Library",
+      blurbs: [
+        "A literature-focused public library in Jongno, built from roof tiles salvaged from a redevelopment district. A hanok reading room sits above a modern stack, with a pavilion and waterfall on the grounds.",
+        "All of that character was invisible at the door. I built the identity out of the name itself — 靑雲, blue cloud, high ground — and tested every icon as a mock-up photographed in the actual space rather than on a white board."
+      ],
+      facts: [["Year","2025"],["Type","Personal work, not in use"],["Role","Strategy, identity, iconography, signage, goods"],["Output","Logotype, 9 icons, signage, stationery, keyring"]],
+      flow: true,
+      frames: ["cheongun/p04.jpg","cheongun/p05.jpg","cheongun/p06.jpg","cheongun/p07.jpg","cheongun/p08.jpg",{row:["cheongun/motion-1.mp4","cheongun/eaves.jpg"]},"cheongun/p10.jpg","cheongun/motion-2.mp4","cheongun/p11.jpg","cheongun/p12.jpg","cheongun/p13.jpg","cheongun/p14.jpg","cheongun/p15.jpg","cheongun/p16.jpg","cheongun/p17.jpg","cheongun/p18.jpg"]
+    },
+    clap: {
+      // Written to hold for both views — switching the reel does not change
+      // what the project is or what my part in it was.
+      kicker: "UX/UI · brand experience · team of 4",
+      title: "C!ap",
+      blurbs: [
+        "97% of donations go to the largest organisations. Small donors compare themselves to celebrity-sized gifts and stop believing their part counts, so they stop giving.",
+        "C!ap turns the donor from patron into participant. Thirty-nine small non-profits sorted so what each one does is legible before you commit, and a flow that does not stop at the payment: your name lands on the organisation's page, the people who gave there can clap for it, and a thank-you letter comes back. We ran the matching for real and 14 of the participants donated."
+      ],
+      facts: [["Year","2025"],["Team","4 members"],["My part","Brand strategy 100 · Brand design 80 · UI 50 · UX 25"],["Result","14 real donors, 39 partner organisations"]],
+      link: { href: "https://www.behance.net/gallery/209388873/Cap", label: "See it on Behance" },
+      flow: true,
+      tracks: [
+        { label: "UX/UI", frames: ["clap/ux-01.jpg","clap/ux-02.jpg","clap/ux-03.jpg","clap/ux-04.jpg","clap/ux-05.jpg","clap/ux-06.jpg","clap/ux-07.jpg","clap/ux-08.jpg","clap/ux-09.jpg","clap/ux-10.jpg","clap/ux-11.jpg","clap/ux-12.jpg","clap/ux-13.jpg","clap/ux-14.jpg","clap/ux-15.jpg","clap/ux-16.jpg","clap/ux-17.jpg","clap/ux-18.jpg","clap/ux-19.jpg","clap/ux-20.jpg","clap/ux-21.jpg","clap/ux-22.jpg","clap/ux-23.jpg","clap/ux-24.jpg","clap/ux-25.jpg","clap/ux-26.jpg","clap/ux-27.jpg","clap/ux-28.jpg","clap/ux-29.jpg"] },
+        { label: "Branding", frames: ["clap/brand-p42.jpg","clap/brand-p43.jpg","clap/brand-p44.jpg","clap/brand-p45.jpg","clap/brand-p46.jpg","clap/brand-p47.jpg","clap/brand-p48.jpg","clap/brand-p49.jpg","clap/brand-p50.jpg","clap/brand-p51.jpg","clap/brand-p52.jpg","clap/brand-p53.jpg","clap/brand-p54.jpg","clap/brand-p55.jpg","clap/brand-p56.jpg","clap/brand-p57.jpg","clap/brand-p58.jpg","clap/brand-p59.jpg","clap/brand-p60.jpg","clap/brand-p61.jpg"] }
+      ]
+    },
+    turnbler: {
+      kicker: "Brand development · product to service",
+      title: "Turnbler",
+      blurbs: [
+        "A stainless tumbler needs roughly 200 uses before it beats a paper cup. The average one is used fewer than 50 times. Selling more tumblers does not help; getting people to keep using one does.",
+        "So the brand is built around use rather than sale, across four parts: a cup you personalise, an app that rewards scans, a plastic-free cleaning line, and a café partnership for takeaway."
+      ],
+      facts: [["Year","2024"],["Type","Personal work"],["Role","Brand, product, packaging, app, service"],["Output","Logotype, motif, 4 characters, product line, app, leaflet"]],
+      link: { href: "https://www.behance.net/gallery/209295021/Turnbler", label: "See it on Behance" },
+      // No captions here — the deck already carries its own type, so this one
+      // runs as one continuous piece instead of a narrated sequence.
+      flow: true,
+      tracks: [
+        { label: "Brand",  frames: ["turnbler/01.jpg","turnbler/02.jpg","turnbler/03.jpg","turnbler/04.jpg","turnbler/05.jpg","turnbler/06.jpg","turnbler/07.jpg","turnbler/08.jpg","turnbler/09.jpg","turnbler/10.jpg","turnbler/11.jpg","turnbler/12.jpg","turnbler/13.jpg","turnbler/14.jpg","turnbler/15.jpg","turnbler/16.jpg","turnbler/17.jpg","turnbler/18.jpg","turnbler/19.jpg","turnbler/20.jpg","turnbler/21.jpg","turnbler/22.jpg","turnbler/23.jpg","turnbler/24.jpg","turnbler/25.jpg","turnbler/26.jpg"] },
+        // The note reads first, then the motion it describes.
+        { label: "Motion",
+          lead: "Tumbler becomes Turnbler by breaking the m into r and n \u2014 the two letters that spell turn. The motion performs the split, so the name carries the thing it asks for: turn the cup back into use.",
+          frames: ["turnbler/motion.mp4","turnbler/hero.jpg"] }
+      ]
+    },
+    signifier: {
+      kicker: "Product design \u00b7 experiment \u00b7 shipped",
+      title: "Image Explain Signifier",
+      blurbs: [
+        "78% of the people who opened a paper had never once asked Moonlight to explain a figure or a table. Yet of those who tried it a single time, 57.5% came back to it inside a week. The feature was not failing to be useful, it was failing to be found: the affordance was there but its signifier sat behind a hover, which leaves two gaps open at once \u2014 you cannot tell what to do, and you cannot tell what you would get.",
+        "Rather than argue about which gap was the bottleneck, I built variants of rising strength and ran them against the control 1:1:1. B told you the result, by putting a label on the button. C went further and showed you, explaining one representative figure the moment you arrived.",
+        "B won. Activation went 15.33% \u2192 20.39% (+5.06%p, +33% relative, p < 0.001), and among that month\u2019s new users 12.76% \u2192 22.05% (+9.29%p, +73%). The whole gain came from getting the button noticed: hover rose 46.1% \u2192 67.5%, while the share who went on to click held at 30\u201333% in every group. Telling was enough. But two of every three people who now see the button still do not press it, so the second gap is still open \u2014 that is the next experiment."
+      ],
+      facts: [["Year","2026"],["Role","Design, experiment design and analysis"],["Run","5 days, 3\u20137 September"],["Sample","3,000+ users per group \u00b7 A/B/C 1:1:1"],["Result","+5.06%p activation"]],
+      frames: [
+        { row: ["signifier/group-a.png","signifier/group-b.png"],
+          caption: "Left, A \u2014 the control: hovering a figure reveals an icon button, and what it gives you is spelled out only in a second-level tooltip. Right, B: the same button carrying a label that names the result. One string and one shape is the whole difference between them." }
+      ],
+      more: {
+        label: "The group that did not work",
+        notes: [
+          "C was the strongest version of the idea and much the most expensive to build \u2014 the only one that reaches into reading and interrupts it. It came out indistinguishable from doing nothing: +0.55%p against the control, p = 0.55. That is an active finding rather than an inconclusive one, since the interval rules out anything above +2.4%p. Showing people the output did not make them want to produce it themselves.",
+          "Why it failed is the part this experiment cannot answer. Nothing here separates \u2018saw the demo and still did not want it\u2019 from \u2018found the demo intrusive\u2019, because the dwell-time and error attributes never reached the analytics pipeline \u2014 a batch script that unpacks them had not been redeployed. The same gap means the reading-experience guardrail went unmeasured for B as well, so the question of whether its label costs anything is still open.",
+          "The segment the plan called for is not the segment reported. The conclusion was meant to come from users who had never used the feature; that cohort was never built, so the numbers above are all users with existing ones mixed in. Random assignment keeps the comparison between groups valid, but the absolute activation rates read higher than the untouched segment alone would."
+        ],
+        frames: [
+          ["signifier/group-c.png", "C \u2014 show. One representative figure is explained on arrival, before anything is clicked."]
+        ]
+      }
+    },
+    wholesome: {
+      kicker: "Rebranding · web UX/UI · team of 5",
+      title: "Wholesomelife",
+      blurbs: [
+        "Customers kept asking why the shop sells hangers but no clothes, and whether the page was broken. The umbrella structure was never explained anywhere on the site.",
+        "The gap was not missing information. Nobody could say why this brand had picked these products. I analysed the seven brands already stocked, found the three criteria running underneath, and turned them into a card module that repeats everywhere."
+      ],
+      facts: [["Year","2024"],["Client","MagicWrap Co., practical brief"],["Team","5 members, 2 weeks"],["My part","Rebranding proposal 100 · UI, onboarding 20"]],
+      flow: true,
+      // p67 and p69 are the still versions of the first two clips, so the
+      // clips take their places. The third sits where it did on the site.
+      frames: ["wholesome/p62.jpg","wholesome/p63.jpg","wholesome/p64.jpg","wholesome/p65.jpg","wholesome/p66.jpg","wholesome/motion-1.mp4","wholesome/p68.jpg","wholesome/motion-2.mp4","wholesome/p70.jpg","wholesome/p71.jpg","wholesome/p72.jpg","wholesome/p73.jpg","wholesome/motion-3.mp4","wholesome/p74.jpg","wholesome/p75.jpg","wholesome/p76.jpg"]
+    },
+
+    board: {
+      kicker: "Growth · product design · shipped",
+      title: "Real-time Sharing Board",
+      blurbs: [
+        "About 8,000 discount coupons were sitting unused and heading for expiry, while a separate group of users was actively looking for a discount. The two never met — there was no place for a coupon to change hands.",
+        "The board makes the exchange visible in real time and leans on three signals: other people are doing this, this much is left, and it will not last. Over nine days 62 researchers shared a coupon, and subscriptions on launch day ran 221.9% above the previous week's average."
+      ],
+      facts: [["Year","2026"],["Role","Strategy with marketing and engineering · design and build"],["Run","9 days, 23–31 July"],["Result","+221.9% subscriptions, 62 sharers"]],
+      link: { href: "https://doldol045.tistory.com/82", label: "Read the write-up" },
+      flow: true,
+      frames: ["growth/board-1.jpg"]
+    },
+    gimhae:     { kicker: "Emblem · client work", title: "Gimhae Health City", blurbs: ["Emblem renewal for the city's health programme. The one piece here that shipped to the public."], facts: [["Year","2024"],["Client","Gimhae City"],["Status","In public use"]],
+      // 2436×834 with a transparent ground — far from 16:9, so it sits centred
+      // inside a normal frame rather than stretching the column.
+      flow: true, frames: [{
+        fit: "gimhae/emblem.png",
+        caption: "The brief called for a cleaner, more refined emblem while retaining the existing silhouette and core elements. I combined the Korean consonants ㄱ and ㅎ from ‘Gimhae’ with the form of a running person, placing the citizens who shape a healthy city at the centre of the symbol. The lettering carries the symbol’s rounded, dynamic character to complete the identity."
+      }] },
+    faco:       { kicker: "App · award", title: "FACO", blurbs: ["A material analysis app. Grand prize at the 26th Design Workshop."], facts: [["Year","2022"],["Award","Grand prize"]], frames: [] },
+    anseong:    { kicker: "Place branding · award", title: "Anseong Travel Product", blurbs: ["A travel product proposed for the city of Anseong. Second place at the first Glocal Design Award."], facts: [["Year","2023"],["Award","2nd place"]], frames: [] },
+    frankfurt: {
+      kicker: "Editorial · Korean learning · team of 7",
+      title: "Ato’s Four Seasons Adventure in Korea",
+      blurbs: [
+        "A Korean language-learning book for international children, created by a seven-person team for submission to the 2023 Frankfurt Book Fair.",
+        "At its centre is Ato, an orphaned tiger cub raised by a grandmother in rural Korea. As he grows through the four seasons, children learn adjective–noun expressions such as ‘warm spring’ and ‘cool breeze’ alongside seasonal scenes. The story goes beyond vocabulary, using character and emotion to connect language learning with Korean culture."
+      ],
+      facts: [["Year","2023"],["Team","7 members"],["Audience","International children learning Korean"],["Venue","Frankfurt Book Fair"]],
+      frames: [
+        "frankfurt/ato-book-cover.png",
+        "frankfurt/ato-four-seasons-spreads.png"
+      ]
+    },
+    riso:       { kicker: "Riso · editorial", title: "RISORISO", blurbs: ["A poetry book made with the riso printing club."], facts: [["Year","2023"],["Role","Design and print"]], frames: [] },
+    kkol: {
+      kicker: "Hangeul lettering · study",
+      title: "The Kkol",
+      blurbs: [
+        "Hangeul typography and lettering study, fifth cohort of 꼴. Each set takes a piece of everyday wordplay and draws it — the shape of the letters doing the joke rather than describing it."
+      ],
+      facts: [["Year","2023"],["Cohort","5th"],["Sets","3 × 3"]],
+      links: [
+        { href: "https://www.instagram.com/p/Cp4WYEprY8w/", label: "Set 1 on Instagram" },
+        { href: "https://www.instagram.com/p/CrGdQLwpyjx/", label: "Set 2 on Instagram" },
+        { href: "https://www.instagram.com/p/Cs8Pc3OJ3CA/", label: "Set 3 on Instagram" }
+      ],
+      flow: true,
+      // Square social posts. Three to a row keeps each set together and stops
+      // nine 820px squares from turning the case into a 7,000px scroll.
+      frames: [
+        { row: ["kkol/c1.jpg","kkol/c2.jpg","kkol/c3.jpg"] },
+        { row: ["kkol/a1.jpg","kkol/a2.jpg","kkol/a3.jpg"] },
+        { row: ["kkol/b1.jpg","kkol/b2.jpg","kkol/b3.jpg"] }
+      ]
+    },
+    thonik: {
+      kicker: "Poster · award",
+      title: "Thonik Lecture Poster",
+      blurbs: ["Poster for a Thonik lecture. Selected in the department competition."],
+      facts: [["Year","2022"],["Award","Selected"]],
+      layout: "poster-note",
+      frames: [[
+        "thonik/thonik-lecture-poster.png",
+        "Created for Design Talks: Thonik’s Visual Voice, this promotional poster introduces the Amsterdam-based studio and translates its philosophy into two visual metaphors: sign language and the city’s canals. Thonik describes itself as a design collective that gives itself a ‘Visual Voice.’ I interpreted sign language as the symbol of that visual language and combined it with Amsterdam’s grachten to express both an invisible voice and the identity of the city where the studio is based."
+      ]]
+    },
+    rural: {
+      kicker: "Rural planning · tourism · award",
+      title: "Finding Geumwang",
+      blurbs: [
+        "Geumwang-eup in Eumseong County had tourism resources but little reason for visitors to connect them or stay. For the 19th Korea Rural Planning Competition, we analysed the area’s history and local character through field visits, demographic research, resource mapping and interviews with residents.",
+        "Built around a lost guardian dog named Geumwang, the proposal turns scattered attractions into a family stamp tour. Each stop reveals part of the town’s story; an unused local space becomes a rescue-team base with rest areas, activities, equipment rental and completion souvenirs. The aim was to extend dwell time, create an accessible route for families with children, and support local tourism and the economy."
+      ],
+      facts: [["Year","2021"],["Competition","19th Korea Rural Planning Competition"],["Result","Selected"],["Scope","Field research, interviews, storytelling, stamp tour"]],
+      textOnly: true,
+      frames: []
+    },
+    cookfest:   { kicker: "Advertising · award", title: "NS Cookfest", blurbs: ["An advertising concept made at the Busan International Advertising Festival creative camp. The earliest thing here, and the reason the rest happened."], facts: [["Year","2019"],["Award","Chair's Award"]], frames: [] }
+  };
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  var CUR = { frames: [] };   // the work currently on screen, for the viewer
+
+  function render() {
+    var id = location.hash.replace("#", "") || ORDER[0];
+    if (!WORK[id]) id = ORDER[0];
+    var w = WORK[id];
+
+    document.querySelector(".case").classList.toggle("text-only", !!w.textOnly);
+    document.title = w.title + " — Eunsol Jang";
+    document.getElementById("title").textContent = w.title;
+    document.getElementById("barTitle").textContent = w.title;
+
+    paintTracks(w);
+    paintInfo(w);
+    paintReel(w, 0);
+
+    // Prev / next follow the index order, so the case view never dead-ends.
+    var i = ORDER.indexOf(id);
+    var prev = ORDER[(i - 1 + ORDER.length) % ORDER.length];
+    var next = ORDER[(i + 1) % ORDER.length];
+    document.getElementById("jump").innerHTML = card(prev, "Prev") + card(next, "Next");
+
+    scrollTo(0, 0);
+  }
+
+  // A work can carry the same project told two ways — the branding cut and the
+  // UX/UI cut. Everything else on the page stays put; only the reel swaps.
+  function tracksOf(w) {
+    return (w.tracks && w.tracks.length) ? w.tracks : [{ label: null, frames: w.frames || [] }];
+  }
+
+  function paintTracks(w) {
+    var host = document.getElementById("tracks");
+    var ts = tracksOf(w);
+    host.querySelectorAll("button").forEach(function (b) { b.remove(); });
+    host.hidden = ts.length < 2;
+    if (ts.length < 2) return;
+
+    ts.forEach(function (t, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = t.label;
+      b.setAttribute("aria-pressed", String(i === 0));
+      b.addEventListener("click", function () {
+        if (b.getAttribute("aria-pressed") === "true") return;
+        host.querySelectorAll("button").forEach(function (x, k) {
+          x.setAttribute("aria-pressed", String(k === i));
+        });
+        paintReel(w, i);
+        var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        host.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+      });
+      host.appendChild(b);
+    });
+  }
+
+  // Written once per work and left alone. Switching the view changes which
+  // frames you are looking at, not what the project is.
+  function paintInfo(w) {
+    document.getElementById("kicker").textContent = w.kicker;
+
+    var host = document.getElementById("blurbs");
+    host.innerHTML = "";
+    w.blurbs.forEach(function (b) {
+      var p = document.createElement("p");
+      p.className = "blurb pretty";
+      p.textContent = b;
+      host.appendChild(p);
+    });
+
+    document.getElementById("facts").innerHTML = w.facts.map(function (f) {
+      return "<dt>" + f[0] + "</dt><dd>" + f[1] + "</dd>";
+    }).join("");
+
+    // `link` for one, `links` for several — both end up in the same list.
+    var exts = document.getElementById("exts");
+    exts.innerHTML = "";
+    (w.links || (w.link ? [w.link] : [])).forEach(function (l) {
+      var a = document.createElement("a");
+      a.className = "ext";
+      a.href = l.href; a.target = "_blank"; a.rel = "noopener";
+      a.innerHTML = '<span class="t"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+      a.querySelector(".t").textContent = l.label;
+      exts.appendChild(a);
+    });
+  }
+
+  function paintReel(w, ti) {
+    var tk = tracksOf(w)[ti];
+    // A case can carry the part that did not work. It belongs in the record,
+    // but it is not what the case is arguing, so it sits folded at the end.
+    // Its frames still join the array the viewer reads, so opening one full
+    // screen keeps paging through the whole case.
+    var more = tk.more || w.more || null;
+    var main = tk.frames || [];
+    var frames = (more && more.frames) ? main.concat(more.frames) : main;
+    CUR = { title: w.title, flow: w.flow, frames: frames };
+
+    var reel = document.getElementById("reel");
+    reel.innerHTML = "";
+    reel.hidden = false;
+    reel.classList.toggle("flow", !!w.flow);
+    reel.classList.toggle("poster-note", w.layout === "poster-note");
+
+    if (tk.lead) {
+      var lead = document.createElement("p");
+      lead.className = "lead pretty";
+      lead.textContent = tk.lead;
+      reel.appendChild(lead);
+    }
+
+    var moreBody = null, det = null;
+    if (more) {
+      det = document.createElement("details");
+      det.className = "more";
+      var sum = document.createElement("summary");
+      sum.innerHTML = '<span class="mk" aria-hidden="true"></span><span class="t"></span>';
+      sum.querySelector(".t").textContent = more.label;
+      det.appendChild(sum);
+      moreBody = document.createElement("div");
+      moreBody.className = "more-body";
+      (more.notes || []).forEach(function (n) {
+        var p = document.createElement("p");
+        p.className = "note pretty";
+        p.textContent = n;
+        moreBody.appendChild(p);
+      });
+      det.appendChild(moreBody);
+    }
+
+    if (frames.length) {
+      frames.forEach(function (f, i) {
+        var items = frameItems(f);
+        var src = frameSrc(f);
+        var caption = frameCap(f);
+
+        var fig = document.createElement("figure");
+        if (opensMotionBlock(frames, i)) fig.className = "group-start";
+
+        var host = fig;
+        if (items.length > 1) {
+          fig.className += " row";
+          host = document.createElement("div");
+          host.className = "pair";
+          host.style.setProperty("--n", items.length);
+          fig.appendChild(host);
+        }
+
+        items.forEach(function (path) {
+          var media = document.createElement("button");
+          media.type = "button";
+          media.className = "media shot" + (isFit(f) ? " fit" : "");
+          media.setAttribute("aria-label", "Open frame " + (i + 1) + " of " + frames.length + " full screen");
+          media.appendChild(makeMedia(path, i < 2));
+          var zoom = document.createElement("span");
+          zoom.className = "zoom";
+          zoom.innerHTML = '<span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H4v5M15 20h5v-5M20 9V4h-5M4 15v5h5"/></svg>';
+          zoom.firstChild.textContent = sourceLabel(path);
+          media.appendChild(zoom);
+          media.addEventListener("click", function () { openLb(i); });
+          host.appendChild(media);
+        });
+
+        if (caption) {
+          var cap = document.createElement("figcaption");
+          cap.innerHTML = '<span class="n">' + pad(i + 1) + "</span>";
+          cap.appendChild(document.createTextNode(caption));
+          fig.appendChild(cap);
+        }
+        (i < main.length ? reel : moreBody).appendChild(fig);
+      });
+      if (det) reel.appendChild(det);
+      document.getElementById("progress").hidden = false;
+    } else if (w.textOnly) {
+      reel.hidden = true;
+      document.getElementById("progress").hidden = true;
+      document.getElementById("barCount").textContent = "";
+    } else {
+      var box = document.createElement("div");
+      box.className = "blank";
+      box.innerHTML = '<span class="mono">no asset yet</span><p>This one is on the list. The images still have to be gathered before it can carry a case study.</p>';
+      reel.appendChild(box);
+      document.getElementById("progress").hidden = true;
+      document.getElementById("barCount").textContent = "";
+    }
+    track();
+  }
+
+  // Prev/next carry the work's first frame, so you can see where you are going.
+  function card(id, label) {
+    var t = WORK[id];
+    var cover = coverOf(t);
+    return '<a href="#' + id + '">' +
+      (cover
+        ? '<span class="media"><img src="assets/' + cover + '" alt="" loading="lazy"></span>'
+        : '<span class="media empty"></span>') +
+      '<span class="txt"><span class="lbl">' + label + '</span>' +
+      '<span class="nm">' + t.title + '</span></span></a>';
+  }
+
+  // A frame is a path, or {row:[...]} for pieces that were composed to sit
+  // side by side — two 960×1080 halves make one 1920×1080 slide.
+  function isRow(f) { return !!f && typeof f === "object" && !!f.row; }
+  // {fit:"…"} — art that is not 16:9, shown inside a frame rather than as one.
+  function isFit(f) { return !!f && typeof f === "object" && !!f.fit; }
+  function frameItems(f) { return isRow(f) ? f.row : [frameSrc(f)]; }
+  function frameSrc(f) {
+    if (isRow(f)) return f.row[0];
+    if (isFit(f)) return f.fit;
+    return typeof f === "string" ? f : f[0];
+  }
+  function frameCap(f) {
+    if (isFit(f) || isRow(f)) return f.caption || null;
+    return typeof f === "string" ? null : f[1];
+  }
+  function isVideo(p) { return /\.mp4$/i.test(p); }
+
+  // A clip only opens the trailing motion block if nothing but clips follow.
+  // One sitting between stills is body content and stays flush with them.
+  function opensMotionBlock(frames, i) {
+    var f = frames[i];
+    if (isRow(f) || !isVideo(frameSrc(f))) return false;
+    if (i === 0 || isVideo(frameSrc(frames[i - 1]))) return false;
+    for (var k = i; k < frames.length; k++) {
+      if (isRow(frames[k]) || !isVideo(frameSrc(frames[k]))) return false;
+    }
+    return true;
+  }
+
+  // "clap/ux-01" — the path is the name, so a frame can be pointed at exactly.
+  function sourceLabel(p) { return p.replace(/\.[a-z0-9]+$/i, ""); }
+
+  // A frame is a path under assets/. .mp4 comes back as a looping muted video
+  // so motion pieces sit in the reel exactly like a still would.
+  function makeMedia(path, eager) {
+    if (isVideo(path)) {
+      var v = document.createElement("video");
+      v.src = "assets/" + path;
+      v.muted = true;
+      ["muted", "autoplay", "loop", "playsinline"].forEach(function (a) { v.setAttribute(a, ""); });
+      v.preload = eager ? "auto" : "metadata";
+      // Ratio comes from the decoded stream. Container metadata lies about
+      // orientation often enough that it is not worth trusting.
+      v.addEventListener("loadedmetadata", function () {
+        if (!v.videoWidth) return;
+        v.style.aspectRatio = v.videoWidth + " / " + v.videoHeight;
+        if (v.videoWidth / v.videoHeight < 1.35) v.classList.add("tall");
+      });
+      return v;
+    }
+    var img = document.createElement("img");
+    img.src = "assets/" + path;
+    img.alt = "";
+    img.loading = eager ? "eager" : "lazy";
+    return img;
+  }
+
+  // Prev/next cards need a still, so skip past any leading video. Reads through
+  // tracksOf, because a work with tabs carries no top-level `frames` at all —
+  // going straight to t.frames threw and took the whole nav down with it.
+  function coverOf(t) {
+    var fs = tracksOf(t)[0].frames || [];
+    for (var i = 0; i < fs.length; i++) {
+      var p = frameSrc(fs[i]);
+      if (!isVideo(p)) return p;
+    }
+    return null;
+  }
+
+  // The counter follows whichever frame is nearest the middle of the viewport.
+  var io = null;
+  function track() {
+    if (io) io.disconnect();
+    var figs = Array.prototype.slice.call(document.querySelectorAll(".reel > figure"));
+    if (!figs.length) return;
+
+    var pCount = document.getElementById("pCount");
+    var bar = document.querySelector(".progress .track i");
+    var barCount = document.getElementById("barCount");
+
+    function set(n) {
+      pCount.textContent = pad(n) + " / " + pad(figs.length);
+      barCount.textContent = pad(n) + " / " + pad(figs.length);
+      bar.style.width = (n / figs.length * 100) + "%";
+    }
+    set(1);
+
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) set(figs.indexOf(e.target) + 1);
+      });
+    }, { rootMargin: "-45% 0px -45% 0px" });
+    figs.forEach(function (f) { io.observe(f); });
+  }
+
+  // ── Full screen viewer ────────────────────────────────────
+  // <dialog> is doing the heavy lifting: Esc, focus trap and an inert page
+  // behind it all come free.
+
+  var lb = document.getElementById("lb"),
+      lbScroll = document.getElementById("lbScroll"),
+      lbStrip = document.getElementById("lbStrip"),
+      lbCount = document.getElementById("lbCount"),
+      lbTitle = document.getElementById("lbTitle");
+
+  var lbIdx = 0, lbFrom = 0, lbIo = null;
+
+  function setCount(n) {
+    lbCount.textContent = pad(n) + " / " + pad(CUR.frames.length);
+  }
+
+  function buildLb(start) {
+    lbStrip.innerHTML = "";
+    CUR.frames.forEach(function (f, i) {
+      var fig = document.createElement("figure");
+      var fs = frameSrc(f);
+      var items = frameItems(f);
+      if (opensMotionBlock(CUR.frames, i)) fig.className = "group-start";
+
+      var host = fig;
+      if (items.length > 1) {
+        fig.className += " row";
+        host = document.createElement("div");
+        host.className = "pair";
+        host.style.setProperty("--n", items.length);
+        fig.appendChild(host);
+      }
+      // Around the entry point loads now; the rest waits for the scroll.
+      items.forEach(function (path) {
+        var m = makeMedia(path, Math.abs(i - start) <= 1);
+        if (isFit(f)) {
+          var box = document.createElement("span");
+          box.className = "media fit";
+          box.appendChild(m);
+          host.appendChild(box);
+        } else {
+          host.appendChild(m);
+        }
+      });
+
+      var cap = frameCap(f);
+      if (cap) {
+        var fc = document.createElement("figcaption");
+        fc.innerHTML = '<span class="n">' + pad(i + 1) + "</span>";
+        fc.appendChild(document.createTextNode(cap));
+        fig.appendChild(fc);
+      }
+      lbStrip.appendChild(fig);
+    });
+  }
+
+  function observeLb() {
+    if (lbIo) lbIo.disconnect();
+    var figs = Array.prototype.slice.call(lbStrip.children);
+    lbIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { lbIdx = figs.indexOf(e.target); setCount(lbIdx + 1); }
+      });
+    }, { root: lbScroll, rootMargin: "-45% 0px -45% 0px" });
+    figs.forEach(function (f) { lbIo.observe(f); });
+  }
+
+  function goFrame(n) {
+    var figs = lbStrip.children;
+    if (n < 0 || n >= figs.length) return;
+    var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    figs[n].scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+  }
+
+  function openLb(i) {
+    if (!CUR.frames.length) return;
+    lbFrom = i; lbIdx = i;
+    lb.classList.toggle("flow", !!CUR.flow);
+    lbTitle.textContent = CUR.title;
+    buildLb(i);
+    lb.showModal();
+    document.documentElement.classList.add("lb-open");
+    // Land on the frame that was clicked, without animating down from the top.
+    var fig = lbStrip.children[i];
+    if (fig) lbScroll.scrollTop = fig.offsetTop - 16;
+    setCount(i + 1);
+    observeLb();
+  }
+
+  function toggleFull() {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (lb.requestFullscreen) lb.requestFullscreen();
+  }
+
+  lb.addEventListener("close", function () {
+    document.documentElement.classList.remove("lb-open");
+    if (document.fullscreenElement) document.exitFullscreen();
+    if (lbIo) { lbIo.disconnect(); lbIo = null; }
+    // Land on the frame you left on, not the one you came in from.
+    if (lbIdx !== lbFrom) {
+      var figs = document.querySelectorAll(".reel figure");
+      var back = figs[lbIdx];
+      if (back) {
+        // The frame you left on may be one of the folded ones.
+        var fold = back.closest("details");
+        if (fold) fold.open = true;
+        back.scrollIntoView({ block: "center", behavior: "auto" });
+      }
+    }
+  });
+
+  document.getElementById("lbClose").addEventListener("click", function () { lb.close(); });
+  document.getElementById("lbFull").addEventListener("click", toggleFull);
+
+  // Clicking the margin beside the reel closes, the way a lightbox should.
+  lbScroll.addEventListener("click", function (e) {
+    if (e.target === lbScroll || e.target === lbStrip) lb.close();
+  });
+
+  lb.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); goFrame(lbIdx + 1); }
+    else if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); goFrame(lbIdx - 1); }
+    else if (e.key === "f" || e.key === "F") { e.preventDefault(); toggleFull(); }
+  });
+
+  addEventListener("hashchange", render);
+  render();
+})();
+</script>
+
+</body>
+</html>
