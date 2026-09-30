@@ -461,6 +461,26 @@ html.lb-open { overflow: hidden; }
 </dialog>
 
 <script>
+  // Hold a shimmer in the frame until the file has decoded, then let it fade
+  // in. Runs for anything inside a .media, however that media got there.
+  function wireMedia(root) {
+    (root || document).querySelectorAll(".media img, .media video").forEach(function (el) {
+      if (el.dataset.wired) return;
+      el.dataset.wired = "1";
+      var host = el.closest(".media");
+      if (!host) return;
+      function done() { host.classList.add("ready"); }
+      if (el.tagName === "VIDEO") {
+        if (el.readyState >= 2) return done();
+        el.addEventListener("loadeddata", done, { once: true });
+      } else {
+        if (el.complete && el.naturalWidth) return done();
+        el.addEventListener("load", done, { once: true });
+      }
+      el.addEventListener("error", done, { once: true });
+    });
+  }
+
 (function () {
   var root = document.documentElement;
   try { var s = localStorage.getItem("theme"); if (s === "light" || s === "dark") root.setAttribute("data-theme", s); } catch (e) {}
@@ -898,6 +918,7 @@ html.lb-open { overflow: hidden; }
     var prev = ORDER[(i - 1 + ORDER.length) % ORDER.length];
     var next = ORDER[(i + 1) % ORDER.length];
     document.getElementById("jump").innerHTML = card(prev, "Prev") + card(next, "Next");
+    wireMedia(document.getElementById("jump"));
 
     scrollTo(0, 0);
   }
@@ -1053,6 +1074,7 @@ html.lb-open { overflow: hidden; }
       });
       if (det) reel.appendChild(det);
       document.getElementById("progress").hidden = false;
+      wireMedia(reel);
     } else if (w.textOnly) {
       reel.hidden = true;
       document.getElementById("progress").hidden = true;
@@ -1234,6 +1256,7 @@ html.lb-open { overflow: hidden; }
       }
       lbStrip.appendChild(fig);
     });
+    wireMedia(lbStrip);
   }
 
   function observeLb() {

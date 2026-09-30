@@ -21,6 +21,7 @@
   --wash:      oklch(24% 0.015 255 / 0.05);
   --media-ring: inset 0 0 0 1px oklch(24% 0.015 255 / 0.10);
   --grid:      oklch(24% 0.015 255 / 0.07);
+  --skeleton:  oklch(99.6% 0.002 250);
 
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
@@ -51,6 +52,7 @@
     --tag-real: oklch(80% 0.085 258);
     --media-ring: inset 0 0 0 1px oklch(94% 0.004 258 / 0.12);
     --grid: oklch(94% 0.004 258 / 0.07);
+    --skeleton: oklch(25% 0.012 258);
   }
 }
 :root[data-theme="light"] {
@@ -59,6 +61,7 @@
   --rule: oklch(24% 0.015 255 / 0.14); --rule-soft: oklch(24% 0.015 255 / 0.07);
   --accent: oklch(52% 0.18 258); --wash: oklch(24% 0.015 255 / 0.05);
   --media-ring: inset 0 0 0 1px oklch(24% 0.015 255 / 0.10); --grid: oklch(24% 0.015 255 / 0.07);
+  --skeleton: oklch(99.6% 0.002 250);
   --tag-win: oklch(47% 0.085 76);
   --tag-real: oklch(43% 0.105 258);
 }
@@ -70,6 +73,7 @@
   --tag-win: oklch(82% 0.075 82);
   --tag-real: oklch(80% 0.085 258);
   --media-ring: inset 0 0 0 1px oklch(94% 0.004 258 / 0.12); --grid: oklch(94% 0.004 258 / 0.07);
+  --skeleton: oklch(25% 0.012 258);
 }
 
 * { box-sizing: border-box; }
@@ -140,6 +144,23 @@ img { display: block; max-width: 100%; }
 
 /* Works with no asset yet. Honest rather than a fake gradient. */
 .media.empty { display: grid; place-items: center; }
+/* Loading. Frames are heavy, so left alone they paint in one at a time as
+   each file lands. A shimmer holds the space instead, and the image fades in
+   over it once it has decoded — so a frame arrives whole or not at all.
+   `.media` already supplies the flat base colour; this is only the sweep. */
+.media:not(.empty)::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(100deg, transparent 22%, var(--skeleton) 50%, transparent 78%);
+  background-size: 220% 100%; background-repeat: no-repeat;
+  animation: media-shimmer 1.5s linear infinite;
+}
+.media > * { position: relative; z-index: 1; }
+.media img, .media video { opacity: 0; transition: opacity 0.4s var(--ease); }
+.media.ready img, .media.ready video { opacity: 1; }
+.media.ready::before { opacity: 0; animation: none; transition: opacity var(--fast) var(--ease); }
+
+@keyframes media-shimmer { from { background-position: 170% 0; } to { background-position: -70% 0; } }
+
 .media.empty::before {
   content: ""; position: absolute; inset: 0;
   background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px),
