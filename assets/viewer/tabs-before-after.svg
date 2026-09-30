@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img">
+<rect width="1200" height="600" fill="#ffffff"/>
+<text x="48" y="56" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" font-weight="600" fill="#1b2026" text-anchor="start">Sidebar tabs opened, before and after the renewal</text>
+<text x="48" y="84" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#8b9098" text-anchor="start">Weekly unique users, three weeks either side of the 7 July deploy.</text>
+<text x="48" y="104" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#8b9098" text-anchor="start">The deploy week is left out. The scale is unlabelled on purpose — read the bars against each other, not against a number.</text>
+<rect x="250" y="122" width="12" height="12" rx="2" fill="#eb6834"/>
+<text x="270" y="132" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">Before</text>
+<rect x="360" y="122" width="12" height="12" rx="2" fill="#2a78d6"/>
+<text x="380" y="132" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">After</text>
+<line x1="250.0" y1="152.0" x2="250.0" y2="536.0" stroke="#e6e9ed" stroke-width="1"/>
+<text x="234.0" y="183.42857142857142" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">With AI</text>
+<path d="M250.0 156.42857142857142 h212.4 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#eb6834"/>
+<path d="M250.0 182.42857142857142 h767.8 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#2a78d6"/>
+<text x="1140.0" y="184.42857142857142" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="500" fill="#1b2026" text-anchor="end">+257%</text>
+<text x="234.0" y="238.28571428571428" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">Highlight</text>
+<path d="M250.0 211.28571428571428 h95.6 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#eb6834"/>
+<path d="M250.0 237.28571428571428 h308.3 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#2a78d6"/>
+<text x="1140.0" y="239.28571428571428" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="500" fill="#1b2026" text-anchor="end">+213%</text>
+<text x="234.0" y="293.14285714285717" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">Comment</text>
+<path d="M250.0 266.14285714285717 h68.9 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#eb6834"/>
+<path d="M250.0 292.14285714285717 h172.9 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#2a78d6"/>
+<text x="1140.0" y="294.14285714285717" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="500" fill="#1b2026" text-anchor="end">+143%</text>
+<text x="234.0" y="348.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">Explanation</text>
+<path d="M250.0 321.0 h88.8 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#eb6834"/>
+<path d="M250.0 347.0 h174.0 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#2a78d6"/>
+<text x="1140.0" y="349.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="500" fill="#1b2026" text-anchor="end">+92%</text>
+<text x="234.0" y="402.8571428571429" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">Note</text>
+<path d="M250.0 375.8571428571429 h86.9 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#eb6834"/>
+<path d="M250.0 401.8571428571429 h117.8 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#2a78d6"/>
+<text x="1140.0" y="403.8571428571429" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="500" fill="#1b2026" text-anchor="end">+34%</text>
+<text x="234.0" y="457.7142857142857" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">Quiz</text>
+<path d="M250.0 430.7142857142857 h73.8 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#eb6834"/>
+<path d="M250.0 456.7142857142857 h115.1 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#2a78d6"/>
+<text x="1140.0" y="458.7142857142857" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="500" fill="#1b2026" text-anchor="end">+53%</text>
+<text x="234.0" y="512.5714285714286" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">Citation</text>
+<path d="M250.0 485.57142857142856 h67.8 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#eb6834"/>
+<path d="M250.0 511.57142857142856 h75.4 a4 4 0 0 1 4 4 v12.0 a4 4 0 0 1 -4 4 H250.0 z" fill="#2a78d6"/>
+<text x="1140.0" y="513.5714285714286" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="500" fill="#1b2026" text-anchor="end">+11%</text>
+<text x="48" y="578" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" fill="#8b9098" text-anchor="start">Not an A/B test. Weekly numbers were already climbing before the deploy, so part of every bar is growth the renewal did not cause.</text>
+</svg>

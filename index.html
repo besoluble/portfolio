@@ -46,7 +46,10 @@
   content: ""; width: 10px; height: 1px; background: currentColor; opacity: 0.45; flex: none;
   transition: width var(--slow) var(--ease), opacity var(--slow) var(--ease), background-color var(--slow) var(--ease);
 }
-.nav a .n { margin-left: auto; opacity: 0.5; font-variant-numeric: tabular-nums; }
+.nav a .n, .nav .label .n { margin-left: auto; opacity: 0.5; font-variant-numeric: tabular-nums; }
+/* the label is a <p>, so it needs the row treatment to park its total on the right
+   edge where the section counts sit. padding matches .nav a. */
+.nav .label { display: flex; align-items: center; padding-right: var(--s2); }
 .nav a:hover { color: var(--ink); background: var(--wash); }
 .nav a:hover::before { width: 16px; opacity: 1; }
 .nav a[aria-current="true"] { color: var(--ink); }
@@ -68,7 +71,21 @@
 /* ── Content ──────────────────────────────────────────────── */
 
 .lede { margin: 0 0 var(--gap-para); font-size: var(--t-lg); line-height: var(--lh-prose); letter-spacing: var(--tr-lg); max-width: 36rem; }
-.lede.sub { color: var(--ink-muted); font-size: var(--t-md); letter-spacing: var(--tr-md); margin-bottom: var(--gap-sect); }
+.lede.sub { color: var(--ink-muted); font-size: var(--t-md); letter-spacing: var(--tr-md); margin-bottom: var(--gap-para); }
+.lede.sub:last-of-type { margin-bottom: var(--gap-sect); }
+/* Who is writing, in the same mono voice the rest of the furniture uses. */
+.about {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s5);
+  margin: 0 0 var(--gap-para);
+  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.02em;
+  color: var(--ink-faint);
+}
+.about a {
+  color: var(--ink-muted); text-decoration: none;
+  border-bottom: 1px solid var(--rule); padding-bottom: 2px;
+  transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+.about a:hover { color: var(--ink); border-color: var(--ink); }
 
 .group { margin-bottom: var(--gap-sect); scroll-margin-top: var(--s5); }
 .group:last-of-type { margin-bottom: 0; }
@@ -115,9 +132,6 @@
 
 .work .aside { display: flex; flex-direction: column; align-items: flex-end; gap: var(--s2); }
 .work .yr { font-family: var(--mono); font-size: var(--t-xs); font-variant-numeric: tabular-nums; color: var(--ink-faint); }
-/* A dot marks the works that carry a full case study. */
-.work .deep { width: 5px; height: 5px; border-radius: 999px; background: var(--accent); opacity: 0; }
-.work[data-deep="1"] .deep { opacity: 0.75; }
 
 @media (max-width: 560px) {
   .work { grid-template-columns: minmax(0, 1fr) auto; row-gap: var(--s3); }
@@ -147,11 +161,12 @@
     </div>
 
     <nav class="block nav" aria-label="Sections" style="--i:1">
-      <p class="label">Work</p>
-      <a href="#brand">Brand<span class="n">5</span></a>
-      <a href="#product">Product<span class="n">3</span></a>
-      <a href="#growth">Growth<span class="n">1</span></a>
-      <a href="#graphic">Graphic<span class="n">7</span></a>
+      <p class="label">Work<span class="n" data-total></span></p>
+      <a href="#brand">Brand<span class="n">3</span></a>
+      <a href="#product">Product<span class="n">6</span></a>
+      <a href="#growth">Growth<span class="n">2</span></a>
+      <a href="#graphic">Graphic<span class="n">9</span></a>
+      <a href="#planning">Planning<span class="n">4</span></a>
     </nav>
 
     <div class="block" style="--i:2">
@@ -176,62 +191,42 @@
   </aside>
 
   <main class="stagger">
-    <p class="lede pretty" style="--i:1">Sixteen projects. Brand identity and brand experience carried through to the object in someone's hand, and the product work I do now.</p>
-    <p class="lede sub pretty" style="--i:2">A dot marks the ten with a full case study behind them.</p>
+    <p class="lede pretty" style="--i:1">Hi! I’m a designer who does all of it — branding, UX/UI, growth. Right now I’m an AI-Native Product Designer at a startup, where growth design, UX/UI and marketing all land on my desk, which is exactly how I like it. Have a wander, and I hope you have fun!</p>
+    <p class="about" style="--i:2"><span>b. 2002.04.05</span><a href="mailto:besoluble@gmail.com">besoluble@gmail.com</a><a href="https://doldol045.tistory.com/" target="_blank" rel="noopener">doldol045.tistory.com</a></p>
 
     <!-- ── Brand ─────────────────────────────────────────── -->
     <section class="group" id="brand" style="--i:3">
-      <h2>Brand identity &amp; experience <span class="count">05</span></h2>
+      <h2>Brand identity &amp; experience <span class="count">03</span></h2>
       <div class="rows">
 
-        <a class="work" href="case.html#moonlight" data-year="2026" data-deep="1">
+        <a class="work" href="case.html#moonlight" data-year="2026">
           <span class="media"><span class="art"><img src="assets/moonlight/moonlight-thumbnail.png" alt="The Moonlight wordmark beside its new circular icon on black" loading="lazy"></span></span>
           <span class="body">
             <span class="t">Moonlight Logo Renewal</span>
             <span class="d pretty">The old mark described where the product’s name came from. The new one says what Moonlight does beside the researcher — a full moon’s steady circle, light spreading in the dark, and a curve that never gets ahead of you.</span>
-            <span class="meta"><span class="tag">brand identity</span><span class="tag">logo</span><span class="tag">shipped</span></span>
+            <span class="meta"><span class="tag real">shipped</span><span class="tag">brand identity</span><span class="tag">logo</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2026</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2026</span></span>
         </a>
 
-        <a class="work" href="case.html#cheongun" data-year="2025" data-deep="1">
-          <span class="media"><span class="art"><video src="assets/cheongun/motion-1-thumb.mp4" autoplay muted loop playsinline preload="metadata"></video></span></span>
-          <span class="body">
-            <span class="t">Cheong-un Literature Library</span>
-            <span class="d pretty">A hanok public library built from salvaged roof tiles, with a strong character and no visual language. Identity, nine icons, signage and goods — every one tested in the real space.</span>
-            <span class="meta"><span class="tag">brand identity</span><span class="tag">signage</span><span class="tag">personal</span></span>
-          </span>
-          <span class="aside"><span class="yr">2025</span><span class="deep" aria-hidden="true"></span></span>
-        </a>
-
-        <a class="work" href="case.html#clap" data-year="2025" data-deep="1">
-          <span class="media"><span class="art"><img src="assets/clap/brand-p56.jpg" alt="" loading="lazy"></span></span>
-          <span class="body">
-            <span class="t">C!ap</span>
-            <span class="d pretty">97% of donations go to the largest organisations, and small donors stop feeling their part counts. A donation brand that turns the donor from patron into participant. We ran the matching for real.</span>
-            <span class="meta"><span class="tag">brand experience</span><span class="tag">service design</span><span class="tag">team of 4</span></span>
-          </span>
-          <span class="aside"><span class="yr">2025</span><span class="deep" aria-hidden="true"></span></span>
-        </a>
-
-        <a class="work" href="case.html#turnbler" data-year="2024" data-deep="1">
+        <a class="work" href="case.html#turnbler" data-year="2024">
           <span class="media"><span class="art"><img src="assets/turnbler/hero.jpg" alt="" loading="lazy"></span></span>
           <span class="body">
             <span class="t">Turnbler</span>
             <span class="d pretty">A tumbler needs about 200 uses to beat a paper cup; the average is under 50. An eco brand built around use rather than sale — cup, app, cleaning line, café partnership.</span>
-            <span class="meta"><span class="tag">brand development</span><span class="tag">product</span><span class="tag">service</span></span>
+            <span class="meta"><span class="tag">brand development</span><span class="tag">product</span><span class="tag">service</span><span class="tag">personal</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2024</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2024</span></span>
         </a>
 
-        <a class="work" href="case.html#gimhae" data-year="2024" data-deep="1">
-          <span class="media fit"><span class="art"><img src="assets/gimhae/logo-new.png" alt="" loading="lazy"></span></span>
+        <a class="work" href="case.html#cheongun" data-year="2023">
+          <span class="media"><span class="art"><video src="assets/cheongun/motion-1-thumb.mp4" autoplay muted loop playsinline preload="metadata"></video></span></span>
           <span class="body">
-            <span class="t">Gimhae Health City</span>
-            <span class="d pretty">Emblem renewal for the city's health programme. The one piece here that shipped to the public.</span>
-            <span class="meta"><span class="tag">emblem</span><span class="tag">client</span><span class="tag">in use</span></span>
+            <span class="t">Cheong-un Literature Library</span>
+            <span class="d pretty">A hanok public library built from salvaged roof tiles, with a strong character and no visual language. Identity, nine icons, signage and goods — every one tested in the real space.</span>
+            <span class="meta"><span class="tag">brand identity</span><span class="tag">signage</span><span class="tag">personal</span><span class="tag">team of 2</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2024</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2023</span></span>
         </a>
 
       </div>
@@ -239,37 +234,67 @@
 
     <!-- ── Product ───────────────────────────────────────── -->
     <section class="group" id="product" style="--i:4">
-      <h2>Product &amp; UX/UI <span class="count">03</span></h2>
+      <h2>Product &amp; UX/UI <span class="count">06</span></h2>
       <div class="rows">
 
-        <a class="work" href="case.html#signifier" data-year="2026" data-deep="1">
+        <a class="work" href="case.html#signifier" data-year="2026">
           <span class="media"><span class="art"><img src="assets/signifier/signifier-thumbnail.png" alt="A figure in a paper with a labelled explain button beneath it" loading="lazy"></span></span>
           <span class="body">
             <span class="t">Image Explain Signifier</span>
-            <span class="d pretty">78% of readers had never asked for a figure to be explained, though most who tried it once kept going back. Three variants at increasing strength: putting a label on the button lifted activation 33%, while the expensive automatic demo did nothing at all.</span>
-            <span class="meta"><span class="tag">activation</span><span class="tag">a/b test</span><span class="tag">shipped</span></span>
+            <span class="d pretty">Most readers had never asked for a figure to be explained, though most who tried it once kept going back. Three variants at increasing strength: putting a label on the button lifted activation 33%, while the expensive automatic demo did nothing at all.</span>
+            <span class="meta"><span class="tag win">+5.06%p activation</span><span class="tag real">shipped</span><span class="tag">a/b test</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2026</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2026</span></span>
         </a>
 
-        <a class="work" href="case.html#wholesome" data-year="2024" data-deep="1">
+        <a class="work" href="case.html#viewer" data-year="2026">
+          <span class="media"><span class="art"><img src="assets/viewer/viewer-thumbnail.jpg" alt="The renewed viewer shell: a 56px icon rail on the left, the document, and the panel with its own tab rail on the right" loading="lazy"></span></span>
+          <span class="body">
+            <span class="t">Viewer Shell</span>
+            <span class="d pretty">“The UI is awkward” stayed among the largest reasons people gave for cancelling, six quarters running. Rebuilding the viewer chrome around what people could not find took weekly sidebar tab opens up 144%.</span>
+            <span class="meta"><span class="tag win">+144% tab opens</span><span class="tag real">shipped</span><span class="tag">ui renewal</span><span class="tag">before/after</span></span>
+          </span>
+          <span class="aside"><span class="yr">2026</span></span>
+        </a>
+
+        <a class="work" href="case.html#toolbar" data-year="2026">
+          <span class="media"><span class="art"><img src="assets/toolbar/toolbar-thumbnail.png" alt="A selection menu over a paper, each row labelled" loading="lazy"></span></span>
+          <span class="body">
+            <span class="t">Selection Toolbar</span>
+            <span class="d pretty">Only a small fraction of new users ever found the toolbar features, though a third of those who did kept coming back. Labels lifted explain +3.5%p and collapsed chat to a sixth; giving chat a row like the others took it up +6.7%p.</span>
+            <span class="meta"><span class="tag win">+6.7%p chat</span><span class="tag real">shipped</span><span class="tag">a/b test</span><span class="tag">discoverability</span></span></span>
+          </span>
+          <span class="aside"><span class="yr">2026</span></span>
+        </a>
+
+        <a class="work" href="case.html#clap" data-year="2024">
+          <span class="media"><span class="art"><img src="assets/clap/brand-p56.jpg" alt="" loading="lazy"></span></span>
+          <span class="body">
+            <span class="t">C!ap</span>
+            <span class="d pretty">97% of donations go to the largest organisations, and small donors stop feeling their part counts. A donation brand that turns the donor from patron into participant. We ran the matching for real.</span>
+            <span class="meta"><span class="tag">ux/ui</span><span class="tag">service design</span><span class="tag">personal</span><span class="tag">team of 4</span></span></span>
+          </span>
+          <span class="aside"><span class="yr">2024</span></span>
+        </a>
+
+        <a class="work" href="case.html#wholesome" data-year="2024">
           <span class="media"><span class="art"><img src="assets/wholesome/wholesomelife-thumbnail.png" alt="Wholesomelife website displayed on a laptop" loading="lazy"></span></span>
           <span class="body">
             <span class="t">Wholesomelife</span>
             <span class="d pretty">Customers kept asking why the shop sells hangers but no clothes. Rebranding an umbrella retailer into a curator, with a card module that carries the three criteria across the whole site.</span>
-            <span class="meta"><span class="tag">rebranding</span><span class="tag">web ux/ui</span><span class="tag">team of 5</span></span>
+            <span class="meta"><span class="tag real">MagicWrap Co. proposal</span><span class="tag">rebranding</span><span class="tag">web ux/ui</span><span class="tag">team of 5</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2024</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2024</span></span>
         </a>
 
-        <a class="work" href="case.html#faco" data-year="2022">
-          <span class="media empty"><span>no asset yet</span></span>
+        <a class="work" href="case.html#faco" data-year="2021">
+          <span class="media"><span class="art"><img src="assets/faco/faco-thumbnail.jpg" alt="Four FACO screens for one material — detail page, certification, colour matching and the texture full bleed" loading="lazy"></span></span>
           <span class="body">
             <span class="t">FACO</span>
-            <span class="d pretty">A material analysis app. Grand prize at the 26th Design Workshop.</span>
-            <span class="meta"><span class="tag">app</span><span class="tag">award</span></span>
+            <span class="d pretty">Point a phone at a fabric and the camera reads its colour and texture, then scores how that colour was made. A 2033 concept built on the premise that dye is a plastic problem no label admits to. I drew the screens.</span>
+            <span class="meta"><span class="tag win">dept. grand prize</span><span class="tag">app</span><span class="tag">ux/ui</span><span class="tag">team of 7</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2022</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2021</span></span>
         </a>
 
       </div>
@@ -277,17 +302,27 @@
 
     <!-- ── Growth ────────────────────────────────────────── -->
     <section class="group" id="growth" style="--i:5">
-      <h2>Growth <span class="count">01</span></h2>
+      <h2>Growth <span class="count">02</span></h2>
       <div class="rows">
 
-        <a class="work" href="case.html#board" data-year="2026" data-deep="1">
+        <a class="work" href="case.html#discount" data-year="2026">
+          <span class="media"><span class="art"><img src="assets/discount/discount-thumbnail.png" alt="A paywall modal showing a discount code and a copy button" loading="lazy"></span></span>
+          <span class="body">
+            <span class="t">Discount at the Limit</span>
+            <span class="d pretty">When the back-to-school promotion ended, nothing inside the product mentioned a price any more. Putting the offer inside the modal people hit at the free ceiling took paid conversion up 5.21 percentage points, more than doubling it.</span>
+            <span class="meta"><span class="tag win">+5.21%p paid</span><span class="tag real">shipped</span><span class="tag">growth</span><span class="tag">conversion</span></span></span>
+          </span>
+          <span class="aside"><span class="yr">2026</span></span>
+        </a>
+
+        <a class="work" href="case.html#board" data-year="2026">
           <span class="media"><span class="art"><img src="assets/growth/board-1.jpg" alt="" loading="lazy"></span></span>
           <span class="body">
             <span class="t">Real-time Sharing Board</span>
-            <span class="d pretty">8,000 coupons were about to expire unused while other users were hunting for a discount. A live board carrying three signals — social proof, what is left, and how long it lasts. Subscriptions rose 221.9% on launch day.</span>
-            <span class="meta"><span class="tag">growth</span><span class="tag">conversion</span><span class="tag">shipped</span></span>
+            <span class="d pretty">Thousands of coupons were about to expire unused while other users were hunting for a discount. A live board carrying three signals — social proof, what is left, and how long it lasts. Subscriptions rose 115.3% against the same days the week before.</span>
+            <span class="meta"><span class="tag win">+115.3% subs</span><span class="tag real">shipped</span><span class="tag">growth</span><span class="tag">conversion</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2026</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2026</span></span>
         </a>
 
       </div>
@@ -295,17 +330,37 @@
 
     <!-- ── Graphic ───────────────────────────────────────── -->
     <section class="group" id="graphic" style="--i:6">
-      <h2>Graphic &amp; editorial <span class="count">07</span></h2>
+      <h2>Graphic &amp; editorial <span class="count">09</span></h2>
       <div class="rows">
 
-        <a class="work" href="case.html#anseong" data-year="2023">
-          <span class="media empty"><span>no asset yet</span></span>
+        <a class="work" href="case.html#haus" data-year="2026">
+          <span class="media"><span class="art"><img src="assets/3rdhaus/pair-stage.png" alt="A pink pig standing beside a white dog in a bow tie and apron" loading="lazy"></span></span>
           <span class="body">
-            <span class="t">Anseong Travel Product</span>
-            <span class="d pretty">A travel product proposed for the city of Anseong. Second place at the first Glocal Design Award.</span>
-            <span class="meta"><span class="tag">place branding</span><span class="tag">award</span></span>
+            <span class="t">3RD HAUS</span>
+            <span class="d pretty">A cafe and bar opening in 2026, given two characters to speak for it before the doors opened — a dog in an apron who works the counter, a pig who is only there to eat. The sun and moon on the apron carry the whole business: coffee by day, drinks by night.</span>
+            <span class="meta"><span class="tag real">3RD HAUS</span><span class="tag">character design</span><span class="tag">illustration</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2023</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2026</span></span>
+        </a>
+
+        <a class="work" href="case.html#gimhae" data-year="2024">
+          <span class="media fit"><span class="art"><img src="assets/gimhae/logo-new.png" alt="" loading="lazy"></span></span>
+          <span class="body">
+            <span class="t">Gimhae Health City</span>
+            <span class="d pretty">Emblem renewal for the city's health programme. The one piece here that shipped to the public.</span>
+            <span class="meta"><span class="tag real">Gimhae City</span><span class="tag">emblem</span></span></span>
+          </span>
+          <span class="aside"><span class="yr">2024</span></span>
+        </a>
+
+        <a class="work" href="case.html#council" data-year="2023">
+          <span class="media"><span class="art"><img src="assets/council/hoodie.jpg" alt="Someone wearing the student council hoodie on a field, the symbol printed across the back" loading="lazy"></span></span>
+          <span class="body">
+            <span class="t">33rd Student Council</span>
+            <span class="d pretty">A symbol for the design major’s 33rd student council. Two threes mirrored and pushed together until the pair closes into a four-lobed shape — the number is the mark, and it reads as a flower first.</span>
+            <span class="meta"><span class="tag real">HKNU student council</span><span class="tag">symbol</span><span class="tag">identity</span></span>
+          </span>
+          <span class="aside"><span class="yr">2023</span></span>
         </a>
 
         <a class="work" href="case.html#frankfurt" data-year="2023">
@@ -313,29 +368,49 @@
           <span class="body">
             <span class="t">Ato’s Four Seasons Adventure in Korea</span>
             <span class="d pretty">A Korean language-learning book for international children, created for the 2023 Frankfurt Book Fair.</span>
-            <span class="meta"><span class="tag">editorial</span><span class="tag">education</span><span class="tag">team of 7</span></span>
+            <span class="meta"><span class="tag real">Frankfurt Book Fair</span><span class="tag">editorial</span><span class="tag">education</span><span class="tag">team of 7</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2023</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2023</span></span>
         </a>
 
         <a class="work" href="case.html#riso" data-year="2023">
-          <span class="media empty"><span>no asset yet</span></span>
+          <span class="media"><span class="art"><img src="assets/riso/riso-thumbnail.jpg" alt="Hands holding an open riso-printed booklet in orange ink" loading="lazy"></span></span>
           <span class="body">
             <span class="t">RISORISO</span>
-            <span class="d pretty">A poetry book made with the riso printing club.</span>
-            <span class="meta"><span class="tag">riso</span><span class="tag">editorial</span></span>
+            <span class="d pretty">Four of us each took a season, so the set runs to four books: poems written by students in a class, gathered and printed on a riso, one flat ink per pass. One of the four is mine.</span>
+            <span class="meta"><span class="tag">riso</span><span class="tag">editorial</span><span class="tag">print</span><span class="tag">team of 4</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2023</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2023</span></span>
         </a>
 
-        <a class="work" href="case.html#kkol" data-year="2023" data-deep="1">
+        <a class="work" href="case.html#kkol" data-year="2023">
           <span class="media"><span class="art"><img src="assets/kkol/c2.jpg" alt="" loading="lazy"></span></span>
           <span class="body">
             <span class="t">The Kkol</span>
             <span class="d pretty">Hangeul typography and lettering study, 5th cohort.</span>
-            <span class="meta"><span class="tag">typography</span><span class="tag">lettering</span></span>
+            <span class="meta"><span class="tag">typography</span><span class="tag">lettering</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2023</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2023</span></span>
+        </a>
+
+        <a class="work" href="case.html#fizzio" data-year="2023">
+          <span class="media"><span class="art"><img src="assets/fizzio/fizzio-thumbnail.jpg" alt="A cyan poster of bubbles, ice and a cut lime" loading="lazy"></span></span>
+          <span class="body">
+            <span class="t">Cool Lime</span>
+            <span class="d pretty">A poster nobody asked for, made because I like the drink. Carbonated, cold and caffeinated — all three in the picture rather than described.</span>
+            <span class="meta"><span class="tag">poster</span><span class="tag">illustration</span><span class="tag">personal</span></span>
+          </span>
+          <span class="aside"><span class="yr">2023</span></span>
+        </a>
+
+        <a class="work" href="case.html#formstudy" data-year="2022">
+          <span class="media"><span class="art"><img src="assets/formstudy/formstudy-thumbnail.jpg" alt="A black bear shape over a field of red and green noise" loading="lazy"></span></span>
+          <span class="body">
+            <span class="t">Form Study</span>
+            <span class="d pretty">A term of experiments run as one fixed procedure: start from something real enough to photograph, then strip it until only its form is left. Six materials, and a tree grown in Excel.</span>
+            <span class="meta"><span class="tag">form study</span><span class="tag">graphic</span><span class="tag">coursework</span></span>
+          </span>
+          <span class="aside"><span class="yr">2022</span></span>
         </a>
 
         <a class="work" href="case.html#thonik" data-year="2022">
@@ -343,9 +418,37 @@
           <span class="body">
             <span class="t">Thonik Lecture Poster</span>
             <span class="d pretty">Poster for a Thonik lecture. Selected in the department competition.</span>
-            <span class="meta"><span class="tag">poster</span><span class="tag">award</span></span>
+            <span class="meta"><span class="tag win">dept. selection</span><span class="tag">poster</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2022</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2022</span></span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ── Planning ──────────────────────── -->
+    <section class="group" id="planning" style="--i:7">
+      <h2>Planning &amp; strategy <span class="count">04</span></h2>
+      <div class="rows">
+
+        <a class="work" href="case.html#hawaii" data-year="2024">
+          <span class="media empty"><span>no asset yet</span></span>
+          <span class="body">
+            <span class="t">Hawaii Capstone Project</span>
+            <span class="d pretty">Three weeks in Honolulu working out how a Korean company that has never traded there would enter Hawaii — an island economy a mainland playbook walks straight past. Judged on the strategy, not the artefact.</span>
+            <span class="meta"><span class="tag win">grand prize</span><span class="tag real">University of Hawaii</span><span class="tag">market strategy</span><span class="tag">team</span></span>
+          </span>
+          <span class="aside"><span class="yr">2024</span></span>
+        </a>
+
+        <a class="work" href="case.html#anseong" data-year="2023">
+          <span class="media empty"><span>no asset yet</span></span>
+          <span class="body">
+            <span class="t">Anseong Travel Product</span>
+            <span class="d pretty">A travel product proposed for the city of Anseong. Second place at the first Glocal Design Award, run inside the university.</span>
+            <span class="meta"><span class="tag win">campus 2nd place</span><span class="tag">place branding</span></span></span>
+          </span>
+          <span class="aside"><span class="yr">2023</span></span>
         </a>
 
         <a class="work" href="case.html#rural" data-year="2021">
@@ -353,9 +456,9 @@
           <span class="body">
             <span class="t">Finding Geumwang</span>
             <span class="d pretty">A story-led stamp tour connecting overlooked attractions in Geumwang-eup, developed through field research and resident interviews.</span>
-            <span class="meta"><span class="tag">rural planning</span><span class="tag">tourism</span><span class="tag">award</span></span>
+            <span class="meta"><span class="tag win">President’s Award</span><span class="tag">rural planning</span><span class="tag">tourism</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2021</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2021</span></span>
         </a>
 
         <a class="work" href="case.html#cookfest" data-year="2019">
@@ -363,9 +466,9 @@
           <span class="body">
             <span class="t">NS Cookfest</span>
             <span class="d pretty">An advertising concept made at the Busan International Advertising Festival creative camp. The earliest thing here, and the reason the rest happened.</span>
-            <span class="meta"><span class="tag">advertising</span><span class="tag">award</span></span>
+            <span class="meta"><span class="tag win">Chair’s Award</span><span class="tag">advertising</span><span class="tag">team of 2</span></span></span>
           </span>
-          <span class="aside"><span class="yr">2019</span><span class="deep" aria-hidden="true"></span></span>
+          <span class="aside"><span class="yr">2019</span></span>
         </a>
 
       </div>
@@ -374,14 +477,41 @@
     <p class="empty-note" id="none" hidden>Nothing in that year.</p>
 
     <footer class="foot">
-      <span>시안 D — Index</span>
-      <span><a href="#">Profile</a> · <a href="#">Writing</a> · <a href="#">Email</a> · <a href="#">Instagram</a></span>
+      <span>Eunsol Jang</span>
+      <span><a href="mailto:besoluble@gmail.com">Email</a> · <a href="https://doldol045.tistory.com/" target="_blank" rel="noopener">Writing</a></span>
     </footer>
   </main>
 
 </div>
 
 <script>
+  // Section counts and the total are derived from the cards themselves, so adding
+  // or moving a work never leaves a stale number behind in the markup.
+  (function () {
+    var total = 0;
+    document.querySelectorAll("section.group").forEach(function (sec) {
+      var n = sec.querySelectorAll("a.work").length;
+      total += n;
+      var head = sec.querySelector("h2 .count");
+      if (head) head.textContent = String(n).padStart(2, "0");
+      var link = document.querySelector('.nav a[href="#' + sec.id + '"] .n');
+      if (link) link.textContent = n;
+    });
+    var t = document.querySelector(".nav .label [data-total]");
+    if (t) t.textContent = total;
+
+    // Same reason: a year button with nothing behind it would only ever show
+    // "Nothing in that year." Drop it rather than leave a dead filter.
+    var years = {};
+    document.querySelectorAll("a.work[data-year]").forEach(function (w) {
+      years[w.getAttribute("data-year")] = true;
+    });
+    document.querySelectorAll('.subfilter button[data-year]').forEach(function (b) {
+      var y = b.getAttribute("data-year");
+      if (y !== "all" && !years[y]) b.remove();
+    });
+  })();
+
 (function () {
   var root = document.documentElement;
   try { var s = localStorage.getItem("theme"); if (s === "light" || s === "dark") root.setAttribute("data-theme", s); } catch (e) {}

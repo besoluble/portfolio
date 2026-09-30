@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img">
+<rect width="1200" height="560" fill="#ffffff"/>
+<text x="48.0" y="56.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" font-weight="600" fill="#1b2026" text-anchor="start">Payment rate within 24 hours of first seeing the modal</text>
+<text x="48.0" y="84.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#8b9098" text-anchor="start">By the weekday it was first seen — the same five days, the week before and the week after</text>
+<rect x="110" y="112" width="12" height="12" rx="2" fill="#eb6834"/>
+<text x="130.0" y="122.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">Before · 17–21 Sept</text>
+<rect x="310" y="112" width="12" height="12" rx="2" fill="#2a78d6"/>
+<text x="330.0" y="122.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">After · 24–28 Sept</text>
+<text x="110.0" y="478.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="middle">Thu</text>
+<text x="362.5" y="478.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="middle">Fri</text>
+<text x="615.0" y="478.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="middle">Sat</text>
+<text x="867.5" y="478.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="middle">Sun</text>
+<text x="1120.0" y="478.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="middle">Mon</text>
+<polyline points="110.0,357.3 362.5,319.1 615.0,403.6 867.5,387.3 1120.0,360.0" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="110.0" cy="357.3" r="4.5" fill="#eb6834" stroke="#ffffff" stroke-width="2"/>
+<circle cx="362.5" cy="319.1" r="4.5" fill="#eb6834" stroke="#ffffff" stroke-width="2"/>
+<circle cx="615.0" cy="403.6" r="4.5" fill="#eb6834" stroke="#ffffff" stroke-width="2"/>
+<circle cx="867.5" cy="387.3" r="4.5" fill="#eb6834" stroke="#ffffff" stroke-width="2"/>
+<circle cx="1120.0" cy="360.0" r="4.5" fill="#eb6834" stroke="#ffffff" stroke-width="2"/>
+<polyline points="110.0,242.7 362.5,210.0 615.0,302.7 867.5,185.5 1120.0,169.1" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="110.0" cy="242.7" r="4.5" fill="#2a78d6" stroke="#ffffff" stroke-width="2"/>
+<circle cx="362.5" cy="210.0" r="4.5" fill="#2a78d6" stroke="#ffffff" stroke-width="2"/>
+<circle cx="615.0" cy="302.7" r="4.5" fill="#2a78d6" stroke="#ffffff" stroke-width="2"/>
+<circle cx="867.5" cy="185.5" r="4.5" fill="#2a78d6" stroke="#ffffff" stroke-width="2"/>
+<circle cx="1120.0" cy="169.1" r="4.5" fill="#2a78d6" stroke="#ffffff" stroke-width="2"/>
+<text x="48.0" y="530.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">Every weekday moved, so the lift is not one unusual day. The Saturday dip is in both weeks.</text>
+</svg>

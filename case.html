@@ -148,14 +148,24 @@
    a normal frame instead of stretching the column. Keeps the scroll rhythm. */
 .reel .media.fit, .lb .media.fit {
   aspect-ratio: 16 / 9;
-  background: oklch(100% 0 0);
-  display: grid; place-items: center;
-  padding: clamp(var(--s5), 5%, var(--s8));
+  /* White is the default stage. A frame that was drawn on a dark ground says
+     so with `bg`, otherwise the paper edge shows as a bright halo round it. */
+  background: var(--fit-bg, oklch(100% 0 0));
+  position: relative;
 }
+/* The insets give the picture a definite box; object-fit does the letterboxing.
+   A percentage cannot do this job here. The frame's height comes from its own
+   aspect-ratio, which does not count as a definite height for a child, so the
+   earlier `max-height: 100%` silently did nothing and any art taller than 16:9
+   overflowed and was cropped. Wide art is width-limited anyway, which is why
+   only a square one ever showed it. Stretch is no help either — it degrades to
+   start on a replaced element. */
 .reel .media.fit img, .reel .media.fit video,
 .lb .media.fit img, .lb .media.fit video {
-  width: auto; height: auto;
-  max-width: 100%; max-height: 100%;
+  position: absolute; inset: 0;
+  box-sizing: border-box;
+  width: 100%; height: 100%;
+  padding: clamp(var(--s5), 5%, var(--s8));
   object-fit: contain;
   aspect-ratio: auto;
 }
@@ -261,19 +271,18 @@
   appearance: none; border: 0; padding: 0; margin: 0; width: 100%;
   cursor: zoom-in; color: inherit; font: inherit;
 }
-/* Shows which source a frame came from — the vocabulary needed to say
-   "this one is a duplicate". Hover only, so the seamless run stays clean. */
+/* Says the frame opens, and nothing else. Hover only, so the seamless run
+   stays clean. */
 .shot .zoom {
   position: absolute; right: var(--s3); bottom: var(--s3); z-index: 2;
-  height: 24px; padding: 0 var(--s2); border-radius: var(--r-chip);
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.02em;
+  width: 26px; height: 26px; border-radius: var(--r-chip);
+  display: inline-flex; align-items: center; justify-content: center;
   color: oklch(100% 0 0); background: oklch(0% 0 0 / 0.55);
   backdrop-filter: blur(6px);
   opacity: 0; transform: translateY(3px);
   transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease);
 }
-.shot .zoom svg { width: 12px; height: 12px; flex: none; }
+.shot .zoom svg { width: 13px; height: 13px; flex: none; }
 .shot:hover .zoom, .shot:focus-visible .zoom { opacity: 1; transform: none; }
 
 /* ── Full screen ──────────────────────────────────────────── */
@@ -437,7 +446,7 @@ html.lb-open { overflow: hidden; }
   var root = document.documentElement;
   try { var s = localStorage.getItem("theme"); if (s === "light" || s === "dark") root.setAttribute("data-theme", s); } catch (e) {}
 
-  var ORDER = ["moonlight","cheongun","clap","turnbler","gimhae","signifier","wholesome","faco","board","anseong","frankfurt","riso","kkol","thonik","rural","cookfest"];
+  var ORDER = ["moonlight","turnbler","cheongun","signifier","viewer","toolbar","clap","wholesome","faco","discount","board","haus","gimhae","council","frankfurt","riso","kkol","fizzio","formstudy","thonik","hawaii","anseong","rural","cookfest"];
 
   var WORK = {
     moonlight: {
@@ -467,26 +476,9 @@ html.lb-open { overflow: hidden; }
         "A literature-focused public library in Jongno, built from roof tiles salvaged from a redevelopment district. A hanok reading room sits above a modern stack, with a pavilion and waterfall on the grounds.",
         "All of that character was invisible at the door. I built the identity out of the name itself — 靑雲, blue cloud, high ground — and tested every icon as a mock-up photographed in the actual space rather than on a white board."
       ],
-      facts: [["Year","2025"],["Type","Personal work, not in use"],["Role","Strategy, identity, iconography, signage, goods"],["Output","Logotype, 9 icons, signage, stationery, keyring"]],
+      facts: [["Year","2023"],["Type","Personal work, not in use"],["Team","2 members"],["Role","Idea sketching together · strategy, identity, iconography, signage and goods"],["Output","Logotype, 9 icons, signage, stationery, keyring"]],
       flow: true,
       frames: ["cheongun/p04.jpg","cheongun/p05.jpg","cheongun/p06.jpg","cheongun/p07.jpg","cheongun/p08.jpg",{row:["cheongun/motion-1.mp4","cheongun/eaves.jpg"]},"cheongun/p10.jpg","cheongun/motion-2.mp4","cheongun/p11.jpg","cheongun/p12.jpg","cheongun/p13.jpg","cheongun/p14.jpg","cheongun/p15.jpg","cheongun/p16.jpg","cheongun/p17.jpg","cheongun/p18.jpg"]
-    },
-    clap: {
-      // Written to hold for both views — switching the reel does not change
-      // what the project is or what my part in it was.
-      kicker: "UX/UI · brand experience · team of 4",
-      title: "C!ap",
-      blurbs: [
-        "97% of donations go to the largest organisations. Small donors compare themselves to celebrity-sized gifts and stop believing their part counts, so they stop giving.",
-        "C!ap turns the donor from patron into participant. Thirty-nine small non-profits sorted so what each one does is legible before you commit, and a flow that does not stop at the payment: your name lands on the organisation's page, the people who gave there can clap for it, and a thank-you letter comes back. We ran the matching for real and 14 of the participants donated."
-      ],
-      facts: [["Year","2025"],["Team","4 members"],["My part","Brand strategy 100 · Brand design 80 · UI 50 · UX 25"],["Result","14 real donors, 39 partner organisations"]],
-      link: { href: "https://www.behance.net/gallery/209388873/Cap", label: "See it on Behance" },
-      flow: true,
-      tracks: [
-        { label: "UX/UI", frames: ["clap/ux-01.jpg","clap/ux-02.jpg","clap/ux-03.jpg","clap/ux-04.jpg","clap/ux-05.jpg","clap/ux-06.jpg","clap/ux-07.jpg","clap/ux-08.jpg","clap/ux-09.jpg","clap/ux-10.jpg","clap/ux-11.jpg","clap/ux-12.jpg","clap/ux-13.jpg","clap/ux-14.jpg","clap/ux-15.jpg","clap/ux-16.jpg","clap/ux-17.jpg","clap/ux-18.jpg","clap/ux-19.jpg","clap/ux-20.jpg","clap/ux-21.jpg","clap/ux-22.jpg","clap/ux-23.jpg","clap/ux-24.jpg","clap/ux-25.jpg","clap/ux-26.jpg","clap/ux-27.jpg","clap/ux-28.jpg","clap/ux-29.jpg"] },
-        { label: "Branding", frames: ["clap/brand-p42.jpg","clap/brand-p43.jpg","clap/brand-p44.jpg","clap/brand-p45.jpg","clap/brand-p46.jpg","clap/brand-p47.jpg","clap/brand-p48.jpg","clap/brand-p49.jpg","clap/brand-p50.jpg","clap/brand-p51.jpg","clap/brand-p52.jpg","clap/brand-p53.jpg","clap/brand-p54.jpg","clap/brand-p55.jpg","clap/brand-p56.jpg","clap/brand-p57.jpg","clap/brand-p58.jpg","clap/brand-p59.jpg","clap/brand-p60.jpg","clap/brand-p61.jpg"] }
-      ]
     },
     turnbler: {
       kicker: "Brand development · product to service",
@@ -512,11 +504,11 @@ html.lb-open { overflow: hidden; }
       kicker: "Product design \u00b7 experiment \u00b7 shipped",
       title: "Image Explain Signifier",
       blurbs: [
-        "78% of the people who opened a paper had never once asked Moonlight to explain a figure or a table. Yet of those who tried it a single time, 57.5% came back to it inside a week. The feature was not failing to be useful, it was failing to be found: the affordance was there but its signifier sat behind a hover, which leaves two gaps open at once \u2014 you cannot tell what to do, and you cannot tell what you would get.",
+        "Most people who opened a paper had never once asked Moonlight to explain a figure or a table. Yet of those who tried it a single time, well over half came back to it inside a week. The feature was not failing to be useful, it was failing to be found: the affordance was there but its signifier sat behind a hover, which leaves two gaps open at once \u2014 you cannot tell what to do, and you cannot tell what you would get.",
         "Rather than argue about which gap was the bottleneck, I built variants of rising strength and ran them against the control 1:1:1. B told you the result, by putting a label on the button. C went further and showed you, explaining one representative figure the moment you arrived.",
-        "B won. Activation went 15.33% \u2192 20.39% (+5.06%p, +33% relative, p < 0.001), and among that month\u2019s new users 12.76% \u2192 22.05% (+9.29%p, +73%). The whole gain came from getting the button noticed: hover rose 46.1% \u2192 67.5%, while the share who went on to click held at 30\u201333% in every group. Telling was enough. But two of every three people who now see the button still do not press it, so the second gap is still open \u2014 that is the next experiment."
+        "B won. Activation rose +5.06%p, a 33% relative lift (p < 0.001), and among that month\u2019s new users +9.29%p, a 73% lift. The whole gain came from getting the button noticed: hover went up by half, while the share who went on to click held flat in every group. Telling was enough. But two of every three people who now see the button still do not press it, so the second gap is still open \u2014 that is the next experiment."
       ],
-      facts: [["Year","2026"],["Role","Design, experiment design and analysis"],["Run","5 days, 3\u20137 September"],["Sample","3,000+ users per group \u00b7 A/B/C 1:1:1"],["Result","+5.06%p activation"]],
+      facts: [["Year","2026"],["Role","Design, experiment design and analysis"],["Run","5 days, 3\u20137 September"],["Sample","A/B/C 1:1:1, evenly split"],["Result","+5.06%p activation"]],
       frames: [
         { row: ["signifier/group-a.png","signifier/group-b.png"],
           caption: "Left, A \u2014 the control: hovering a figure reveals an icon button, and what it gives you is spelled out only in a second-level tooltip. Right, B: the same button carrying a label that names the result. One string and one shape is the whole difference between them." }
@@ -533,6 +525,80 @@ html.lb-open { overflow: hidden; }
         ]
       }
     },
+    viewer: {
+      kicker: "Product design \u00b7 UI renewal \u00b7 shipped",
+      title: "Viewer Shell",
+      blurbs: [
+        "For six quarters running, \u2018the UI is awkward\u2019 was one of the largest single reasons people gave when they cancelled, and it never fell out of the top group across seventeen months. It was never one bad screen. It was the same three complaints every quarter: I did not know that feature was there, getting back to the library takes too much, and the explain popover slides around whenever the page zooms.",
+        "Read against Nielsen\u2019s heuristics those land on visibility of system status, recognition over recall, and consistency. The users had said what hurt and the audit said why, and they pointed at the same places, so the whole viewer chrome was rebuilt: collapsing the left sidebar now leaves a 56px icon rail behind instead of removing it, the right-hand tabs carry live counts, the explain popover floats free of the PDF\u2019s zoom, and the export icon stops being an ambiguous three-dot menu.",
+        "Across the three weeks before the 7 July deploy against the three after, weekly unique users opening a sidebar tab went up 144%. With AI and Highlight both more than tripled, Comment nearly two and a half times, Explanation not quite doubled. Citation, the one tab that barely moved, went up 11%."
+      ],
+      facts: [["Year","2026"],["Role","Design and front-end"],["Deployed","7 July 2026"],["Method","Before and after, not A/B"],["Scope","Top bar, both sidebars, explain popover"],["Result","+144% tab opens"]],
+      frames: [
+        { row: ["viewer/before.jpg","viewer/after.jpg"], caption: "Before and after, with the left sidebar folded in both. Watch three places: the left edge, where a single chevron becomes a 56px icon rail; the right edge, where the panel tabs come out of one scrolling stack into a rail of their own; and the top bar, where an ambiguous three-dot menu becomes an export icon that says what it does." },
+        ["viewer/shell.mp4", "The rail folded, then hovered: every tab says its own name without the panel having to open. Then the explain popover, which now keeps its place while the page zooms under it."],
+        ["viewer/tabs-before-after.svg", "The metric the renewal was aimed at."]
+      ],
+      more: {
+        label: "Why this is a weaker number than it looks",
+        notes: [
+          "It could not have been an A/B test. The legacy viewer was being deleted a file at a time, so keeping it alive to serve half the users would have cost more than the comparison is worth. The renewal went out to everyone and the measurement is a before against an after.",
+          "Which puts growth inside every bar. The weekly figures were already climbing in the run-up \u2014 Highlight rose about a third across the three weeks before the deploy \u2014 so some of what follows is that same curve continuing rather than anything the design did.",
+          "Segments were held fixed to take part of that out: everyone, then the users who already reach for two paid AI features three times a week, then each week\u2019s new arrivals. The lift holds in all three. It is smallest among new users, +70%, and that is the least flattering cut and the one worth quoting.",
+          "Desktop and mobile could not be separated at all, because the events carry no platform property. And several of the things the renewal actually changed have no event behind them \u2014 opening and closing the sidebar, the memo toolbar, the popover\u2019s own interactions. The chart measures what happened to be instrumented, not everything that moved."
+        ]
+      }
+    },
+    toolbar: {
+      kicker: "Product design \u00b7 experiment \u00b7 shipped",
+      title: "Selection Toolbar",
+      blurbs: [
+        "Across a quarter of new sign-ups, only a small fraction ever found the features in the selection toolbar \u2014 explain did best, chat and highlight worse. Of the people who did find one, about a third went on to use it ten times or more. Nothing was wrong with the features. They were invisible.",
+        "The first round put a text label on every icon, and it worked on the thing it aimed at: explain rose 3.5%p among new users and 4.0%p among existing ones. It also broke something. Chat submissions collapsed to a sixth of what they had been.",
+        "Chat had been sitting under the divider as a placeholder field rather than a row in the list. Different visual form, so people read it as a different kind of thing \u2014 a search box, not a feature \u2014 and it dropped out of the scan entirely. The second round tested two repairs: reveal chat on hover, or promote it to a row in the same form as the rest. The row won, taking chat submissions up +6.7%p among new users and +2.9%p among existing ones. Hover did nothing.",
+        "Hover could not have worked. It only fires for someone already interested in that corner of the screen, and the whole problem was that nobody knew there was anything there \u2014 it manages the complexity of a feature you have already found rather than helping you find one. The wider lesson is that \u2018visually different\u2019 is not the same as \u2018emphasised\u2019: push the difference past a category boundary and the thing stops being seen at all. Features of equal standing have to look like each other to stay inside the same glance."
+      ],
+      facts: [["Year","2026"],["Role","Design, experiment design and analysis"],["Run","Two rounds, March\u2013April"],["Sample","A/B/C, evenly split"],["Result","chat +6.7%p \u00b7 explain +3.5%p"]],
+      links: [
+        { href: "https://doldol045.tistory.com/16", label: "Write-up: reading the result in UX terms" },
+        { href: "https://doldol045.tistory.com/18", label: "Write-up: what the second round taught" }
+      ],
+      frames: [
+        ["toolbar/discovery.svg", "Where it started."],
+        ["toolbar/toolbar-icons.png", "Before. Icons with nothing to read, and chat as a placeholder field at the end of the row."],
+        ["toolbar/menu-round1.png", "Round one. A label on every row, which is what lifted explain \u2014 and chat still below the divider in a form of its own, which is what sank it."],
+        ["toolbar/menu-round2.png", "Round two. Chat promoted to a row shaped like the others, and it comes back."],
+        ["toolbar/chat-by-group.svg", "What that was worth."]
+      ],
+      more: {
+        label: "What the headline number did not move",
+        notes: [
+          "Overall conversion \u2014 the share of people who used any of the four features after the toolbar appeared \u2014 lands within 1.3 points across the three groups in both segments. That is one number three times. Everything above happens inside it, because explain accounts for more than nine of every ten people who convert at all, so even a large move in chat barely shifts the total. Chat turned out not to be an alternative to explain but something people reach for alongside it.",
+          "One of the first round\u2019s figures was also wrong for a while. A toolbar-discovery rate was recorded far too high before anyone noticed the denominator counted every new signup rather than the ones the toolbar had actually been shown to. Corrected, it is far lower, and it is why the second round is measured only against people the toolbar demonstrably appeared for.",
+          "The largest finding is still unaddressed. In the measured window most new signups never saw the toolbar at all \u2014 it only exists once you select text. Everything in this case improves what happens after it appears, which is the smaller half of the problem."
+        ],
+        frames: [
+          ["toolbar/conversion-by-group.svg", "The metric the experiment was judged on."]
+        ]
+      }
+    },
+    clap: {
+      // Written to hold for both views — switching the reel does not change
+      // what the project is or what my part in it was.
+      kicker: "UX/UI · brand experience · team of 4",
+      title: "C!ap",
+      blurbs: [
+        "97% of donations go to the largest organisations. Small donors compare themselves to celebrity-sized gifts and stop believing their part counts, so they stop giving.",
+        "C!ap turns the donor from patron into participant. Thirty-nine small non-profits sorted so what each one does is legible before you commit, and a flow that does not stop at the payment: your name lands on the organisation's page, the people who gave there can clap for it, and a thank-you letter comes back. We ran the matching for real and 14 of the participants donated."
+      ],
+      facts: [["Year","2024"],["Type","Personal work, team project"],["Team","4 members"],["My part","Brand strategy 100 · Brand design 80 · UI 50 · UX 25"],["Reach","39 organisations covered, 14 people gave"]],
+      link: { href: "https://www.behance.net/gallery/209388873/Cap", label: "See it on Behance" },
+      flow: true,
+      tracks: [
+        { label: "UX/UI", frames: ["clap/ux-01.jpg","clap/ux-02.jpg","clap/ux-03.jpg","clap/ux-04.jpg","clap/ux-05.jpg","clap/ux-06.jpg","clap/ux-07.jpg","clap/ux-08.jpg","clap/ux-09.jpg","clap/ux-10.jpg","clap/ux-11.jpg","clap/ux-12.jpg","clap/ux-13.jpg","clap/ux-14.jpg","clap/ux-15.jpg","clap/ux-16.jpg","clap/ux-17.jpg","clap/ux-18.jpg","clap/ux-19.jpg","clap/ux-20.jpg","clap/ux-21.jpg","clap/ux-22.jpg","clap/ux-23.jpg","clap/ux-24.jpg","clap/ux-25.jpg","clap/ux-26.jpg","clap/ux-27.jpg","clap/ux-28.jpg","clap/ux-29.jpg"] },
+        { label: "Branding", frames: ["clap/brand-p42.jpg","clap/brand-p43.jpg","clap/brand-p44.jpg","clap/brand-p45.jpg","clap/brand-p46.jpg","clap/brand-p47.jpg","clap/brand-p48.jpg","clap/brand-p49.jpg","clap/brand-p50.jpg","clap/brand-p51.jpg","clap/brand-p52.jpg","clap/brand-p53.jpg","clap/brand-p54.jpg","clap/brand-p55.jpg","clap/brand-p56.jpg","clap/brand-p57.jpg","clap/brand-p58.jpg","clap/brand-p59.jpg","clap/brand-p60.jpg","clap/brand-p61.jpg"] }
+      ]
+    },
     wholesome: {
       kicker: "Rebranding · web UX/UI · team of 5",
       title: "Wholesomelife",
@@ -540,24 +606,111 @@ html.lb-open { overflow: hidden; }
         "Customers kept asking why the shop sells hangers but no clothes, and whether the page was broken. The umbrella structure was never explained anywhere on the site.",
         "The gap was not missing information. Nobody could say why this brand had picked these products. I analysed the seven brands already stocked, found the three criteria running underneath, and turned them into a card module that repeats everywhere."
       ],
-      facts: [["Year","2024"],["Client","MagicWrap Co., practical brief"],["Team","5 members, 2 weeks"],["My part","Rebranding proposal 100 · UI, onboarding 20"]],
+      facts: [["Year","2024"],["Client","MagicWrap Co., practical brief"],["Status","Proposal, not adopted"],["Team","5 members, 2 weeks"],["My part","Rebranding proposal 100 · UI, onboarding 20"]],
       flow: true,
       // p67 and p69 are the still versions of the first two clips, so the
       // clips take their places. The third sits where it did on the site.
-      frames: ["wholesome/p62.jpg","wholesome/p63.jpg","wholesome/p64.jpg","wholesome/p65.jpg","wholesome/p66.jpg","wholesome/motion-1.mp4","wholesome/p68.jpg","wholesome/motion-2.mp4","wholesome/p70.jpg","wholesome/p71.jpg","wholesome/p72.jpg","wholesome/p73.jpg","wholesome/motion-3.mp4","wholesome/p74.jpg","wholesome/p75.jpg","wholesome/p76.jpg"]
+      frames: ["wholesome/p62.jpg","wholesome/p63.jpg","wholesome/p64.jpg","wholesome/p65.jpg","wholesome/p66.jpg","wholesome/motion-1.mp4","wholesome/p68.jpg","wholesome/motion-2.mp4","wholesome/p70.jpg","wholesome/p71.jpg","wholesome/p72.jpg","wholesome/p73.jpg","wholesome/motion-3.mp4","wholesome/p74.jpg","wholesome/p75.jpg","wholesome/p76.jpg"],
+      more: {
+        label: "Where the brief came from",
+        notes: [
+          "Intern10, a UX/UI practical course run by MyOn Company \u2014 third intake, 11 November to 6 December 2024. MagicWrap was the brand we were handed to work on."
+        ],
+        frames: [
+          { fit: "wholesome/certificate.jpg" }
+        ]
+      }
     },
 
+    discount: {
+      kicker: "Growth \u00b7 product design \u00b7 shipped",
+      title: "Discount at the Limit",
+      blurbs: [
+        "The back-to-school promotion closed on 23 September and took with it the only place inside the product that said what anything cost. The moment a price is worth hearing is the moment somebody hits the free ceiling \u2014 three papers a week \u2014 and is already weighing whether to pay. So the offer moved into that modal.",
+        "The code exists nowhere else, and the same button that opens checkout puts it on the clipboard first, so nobody has to leave the modal and go hunting for it. The panel states a percentage rather than a price: the two markets run on different currencies, and spelling both out would have put six numbers in one small box.",
+        "The offer window is read from the reader\u2019s own calendar rather than a single instant in UTC, which would have cut Taiwan\u2019s last day an hour short.",
+        "Comparing the five days before with the five after, within 24 hours of a person\u2019s first sight of the modal: clicks through to checkout rose +9.00%p, subscriptions started +5.57%p, and payments that survived the refund window +5.21%p \u2014 the last of those a 2.6\u00d7 lift on where it started."
+      ],
+      facts: [["Year","2026"],["Role","Design and front-end"],["Scope","Korea and Taiwan"],["Run","24 September \u2013 23 October"],["Result","+5.21%p paid conversion"]],
+      frames: [
+        ["discount/outside-kr.png", "The modal as it stood: one filled button to start the trial, one outlined button to invite a friend."],
+        ["discount/limit-reached-kr.png", "During the campaign. The panel names a discount that exists only here, and the first button copies the code and opens checkout in one press. The trial drops to an outline and the invite falls to a text link, so the order of preference reads at a glance."],
+        ["discount/funnel.svg", "What it did."],
+        ["discount/by-weekday.svg", "And when."]
+      ],
+      more: {
+        label: "Why this is not a clean number",
+        notes: [
+          "This was not a randomised experiment. It is five days against the five that followed, matched by weekday, so everything else that moved in that week moves with it \u2014 including the promotion ending, which is the reason the modal changed in the first place.",
+          "The code also pays immediately, with no trial in between, where the old path started a week of free use first. Some of the lift is therefore payment brought forward rather than payment created. Subscription starts rose too, which argues against that being the whole story, but the two cannot be separated out of this data.",
+          "Exposure more than halved across the two windows. The rates stay comparable; the absolute counts do not, and a change that size in the denominator is worth knowing before quoting any of the percentages above.",
+          "The honest read is that it needs another 7 to 14 days, until final payments and refunds have settled, before any of this is a number to stand behind."
+        ]
+      }
+    },
     board: {
       kicker: "Growth · product design · shipped",
       title: "Real-time Sharing Board",
       blurbs: [
-        "About 8,000 discount coupons were sitting unused and heading for expiry, while a separate group of users was actively looking for a discount. The two never met — there was no place for a coupon to change hands.",
-        "The board makes the exchange visible in real time and leans on three signals: other people are doing this, this much is left, and it will not last. Over nine days 62 researchers shared a coupon, and subscriptions on launch day ran 221.9% above the previous week's average."
+        "Thousands of discount coupons were sitting unused and heading for expiry, while a separate group of users was actively looking for a discount. The two never met — there was no place for a coupon to change hands.",
+        "The board makes the exchange visible in real time and leans on three signals: other people are doing this, this much is left, and it will not last. Over nine days researchers shared coupons through it, and subscriptions created ran 115.3% above the same stretch of the week before."
       ],
-      facts: [["Year","2026"],["Role","Strategy with marketing and engineering · design and build"],["Run","9 days, 23–31 July"],["Result","+221.9% subscriptions, 62 sharers"]],
+      facts: [["Year","2026"],["Role","Strategy with marketing and engineering · design and build"],["Run","9 days, 23–31 July"],["Result","+115.3% subscriptions"]],
       link: { href: "https://doldol045.tistory.com/82", label: "Read the write-up" },
       flow: true,
       frames: ["growth/board-1.jpg"]
+    },
+    formstudy: {
+      kicker: "Form study \u00b7 coursework",
+      title: "Form Study",
+      blurbs: [
+        "A term of formal experiments run as one procedure rather than a series of one-offs. Every study passed through the same three moves. Absorbing: take a way of working out of an existing body of work \u2014 Travess Smalley\u2019s \u2014 and apply it to an object it was never used on. Stealing: do the same with a classmate\u2019s method, or with the work itself. Thankyou: name them.",
+        "The materials were ordinary and had to be real enough to photograph \u2014 coloured paper, a bag of hair elastics, plastic waste \u2014 and then Excel, used as a drawing tool rather than a spreadsheet. Each one got its own verbs: layering, blending, scattering, cloning, trimming, make organic form.",
+        "Two were finished as posters. One is drawn with a spreadsheet chart, the tool bent until it stops plotting and starts drawing. The other starts from the bag of elastics and ends with nothing left of them but the way they overlap. All of it was archived as a website."
+      ],
+      facts: [["Year","2022"],["Course","DG2 A03"],["Frame","Absorbing \u00b7 Stealing \u00b7 Thankyou"],["Absorbed from","Travess Smalley"],["Stolen from","Soeun Park \u00b7 Sion Yoo \u00b7 Hyunmin Kim"],["Materials","Coloured paper \u00b7 hair elastics \u00b7 plastic waste \u00b7 Excel"],["Studies","Six, two finished as posters"]],
+      links: [
+        { href: "https://contentsinus.cargo.site/", label: "The archive site" },
+        { href: "assets/formstudy/form-study.pdf", label: "The full study, all six" }
+      ],
+      frames: [
+        { fit: "formstudy/poster.jpg", bg: "#000", n: "1-1",
+          caption: "Example one, hair elastics." },
+        { row: ["formstudy/material-1.jpg","formstudy/material-2.jpg","formstudy/material-3.jpg"], n: "1-2",
+          caption: "A bag of them, tipped out, then laid flat so they overlap rather than pile." },
+        { row: ["formstudy/arranged-1.jpg","formstudy/arranged-2.jpg"], n: "1-3",
+          caption: "Shot from several angles and packings, close enough that the rings stop being elastics." },
+        { row: ["formstudy/rubber-grid.jpg"], n: "1-4",
+          caption: "Then pushed through filters \u2014 posterise, stained glass, vivid light \u2014 until only the overlapping is left. The material is about as physical as a material gets, so the graphic was pushed the other way, into something that reads as a game world rather than a photographed one. That is what the poster is built from." },
+
+        { row: ["formstudy/chart-poster.jpg","formstudy/chart-poster-mono.jpg"], n: "2-1",
+          caption: "Example two, a spreadsheet chart. In full colour, and the same plate run in a single ink." },
+        { row: ["formstudy/excel-tooling.mp4","formstudy/trees.jpg"], cols: "1.059fr 0.652fr", n: "2-2",
+          caption: "Excel as the drawing tool: radar charts pushed until the plot stops being a plot, then run again at other densities. Some of the runs were set against a tree, to see whether the scatter would read as a canopy. It did \u2014 which is why the finished poster drops the tree and keeps only the scatter." }
+      ],
+      more: {
+        label: "The frame all six were built on",
+        notes: [
+          "Absorbing was defined as bringing a way of working out of existing work and applying it to a new object \u2014 a way of widening what the verb \u2018to design\u2019 covers. Stealing was the same move aimed at the people in the room: take how a classmate made something, or the thing itself, and fold it into your own.",
+          "Which is why the matrix has a Thankyou column. Every borrowed method is attributed by name."
+        ],
+        frames: [
+          { row: ["formstudy/matrix.jpg"], n: "0-1", caption: "The working matrix: material down the side, what was absorbed and what was stolen across, and who to thank." },
+          { row: ["formstudy/archive.mp4"], n: "0-2", caption: "The archive site the whole term was published to." }
+        ]
+      }
+    },
+    fizzio: {
+      kicker: "Poster \u00b7 personal \u00b7 unsolicited",
+      title: "Cool Lime",
+      blurbs: [
+        "A poster nobody asked for, made because I like the drink. Starbucks\u2019 Fizzio line is carbonated, cold and has caffeine in it, and I wanted those three to be in the picture rather than described \u2014 bubbles on the way up, ice going soft at the edges, a lime cut open, and a jolt running down the middle of it.",
+        "Everything is one colour lifting off the paper: the cyan is the ground and the drink is what has been taken out of it, which is the only way the fizz reads as cold rather than as decoration."
+      ],
+      facts: [["Year","2023"],["Type","Personal work, unsolicited"],["Format","A-series poster"],["Subject","Starbucks Fizzio \u00b7 Cool Lime"]],
+      frames: [
+        { fit: "fizzio/poster.png", bg: "#000" }
+      ]
     },
     gimhae:     { kicker: "Emblem · client work", title: "Gimhae Health City", blurbs: ["Emblem renewal for the city's health programme. The one piece here that shipped to the public."], facts: [["Year","2024"],["Client","Gimhae City"],["Status","In public use"]],
       // 2436×834 with a transparent ground — far from 16:9, so it sits centred
@@ -566,8 +719,70 @@ html.lb-open { overflow: hidden; }
         fit: "gimhae/emblem.png",
         caption: "The brief called for a cleaner, more refined emblem while retaining the existing silhouette and core elements. I combined the Korean consonants ㄱ and ㅎ from ‘Gimhae’ with the form of a running person, placing the citizens who shape a healthy city at the centre of the symbol. The lettering carries the symbol’s rounded, dynamic character to complete the identity."
       }] },
-    faco:       { kicker: "App · award", title: "FACO", blurbs: ["A material analysis app. Grand prize at the 26th Design Workshop."], facts: [["Year","2022"],["Award","Grand prize"]], frames: [] },
-    anseong:    { kicker: "Place branding · award", title: "Anseong Travel Product", blurbs: ["A travel product proposed for the city of Anseong. Second place at the first Glocal Design Award."], facts: [["Year","2023"],["Award","2nd place"]], frames: [] },
+    faco: {
+      kicker: "App · UI design · award",
+      title: "FACO",
+      blurbs: [
+        "Facts in color. Plastic-heavy dyes leave the mill as wastewater and stay in it as microplastic, and nothing on a label tells you which ones did. FACO is the 2033 answer: point a phone at a fabric, let the camera read its colour and texture, and get a Green Score back for how that colour was made.",
+        "The brief was 2033 Future Design News — pick a technology you believe will have arrived by then and design for it. Ours was the assumption that phone zoom and image analysis will be good enough to name a pigment on sight.",
+        "I drew the screens: the camera and its Green Score, the colour and texture catalogues, and each material’s own page — the certification behind the claim, and the colours it sits best beside."
+      ],
+      facts: [["Year","2021"],["Role","UI design · app screens"],["Brief","HKNU Design Camp · 2033 Future Design News"],["Competition","26th Design Workshop · in-department"],["Award","Grand Prize · 대상"],["Team","7 members"]],
+      frames: [
+        ["faco/detail-flow.jpg", "One material end to end — the detail page, the certification behind the claim, the colours it matches, then the texture full bleed."],
+        ["faco/screens.jpg", "The rest of it: camera and Green Score, the colour and texture catalogues, account."]
+      ]
+    },
+    haus: {
+      kicker: "Character design \u00b7 brand \u00b7 client work",
+      title: "3RD HAUS",
+      blurbs: [
+        "A cafe and bar opening in August 2026, given two characters to speak for it before the doors opened: a white dog in a bow tie and apron who works the counter, and a pig who is only ever there to eat.",
+        "The apron carries a sun and a moon, which is the business written as one mark \u2014 the same room pours coffee through the day and drinks at night. The wordmark says it again, a small sun set between 3RD and HAUS.",
+        "Everything is drawn in a single wobbling line weight with almost no fill, so the pair survive the range a small shop actually needs: a square announcement, a phone-sized picture, a profile photo the size of a thumbnail."
+      ],
+      facts: [["Year","2026"],["Client","3RD HAUS \u00b7 cafe and bar"],["Role","Character design and illustration"],["Opening","August 2026"]],
+      flow: true,
+      frames: [
+        "3rdhaus/pair-stage.png",
+        { row: ["3rdhaus/blossom.png","3rdhaus/peek.png"] },
+        { row: ["3rdhaus/yawn.png","3rdhaus/cookie.png"] },
+        "3rdhaus/coming-soon.png"
+      ]
+    },
+    hawaii: {
+      kicker: "Market strategy \u00b7 capstone \u00b7 award",
+      title: "Hawaii Capstone Project",
+      blurbs: [
+        "Three weeks in Honolulu with a single question: take a Korean company that has never traded there and work out how it would enter Hawaii. Pick the company, read the market it would be landing in, and come back with an entry strategy that survives questioning.",
+        "Hawaii is not a small United States \u2014 it is an island economy with its own import costs, its own mix of residents and visitors, and a local preference that a mainland playbook walks straight past. The work was in choosing a company whose product actually answers something about that, then building the case for it.",
+        "Judged on the strategy rather than the artefact. Our team took the Grand Prize."
+      ],
+      facts: [["Year","2024"],["Programme","2024 Hawaii Capstone Project"],["With","University of Hawaii \u00b7 SUPERPACK"],["Run","16 January \u2013 2 February 2024"],["Brief","Localisation strategy for a Korean company entering Hawaii"],["Team","Team Happy"],["Award","Grand Prize"]],
+      frames: [],
+      more: {
+        label: "The day it was handed over",
+        notes: [
+          "Signed off by both sides of the programme \u2014 SUPERPACK\u2019s CEO and a professor at the University of Hawaii \u2014 and made out to Team Happy of Hankyong National University."
+        ],
+        frames: [
+          { fit: "hawaii/certificate.jpg" }
+        ]
+      }
+    },
+    anseong:    { kicker: "Place branding · award", title: "Anseong Travel Product", blurbs: ["A travel product proposed for the city of Anseong. Second place at the first Glocal Design Award, run inside the university."], facts: [["Year","2023"],["Competition","1st Glocal Design Award · on campus"],["Award","2nd place"]], frames: [] },
+    council: {
+      kicker: "Symbol \u00b7 student council",
+      title: "33rd Student Council",
+      blurbs: [
+        "A symbol for the 33rd student council of the design major at Hankyong National University. The two threes are mirrored and pushed together until the pair closes into a four-lobed shape, so the number is the mark \u2014 and the mark reads as a flower before it reads as a number.",
+        "One stroke weight, one colour, no fill. That is what a student council actually needs: it has to survive being pressed onto a hoodie in a single ink and still hold together from the other side of a field."
+      ],
+      facts: [["Year","2023"],["For","HKNU design major \u00b7 33rd student council"],["Role","Symbol design"]],
+      frames: [
+        "council/hoodie.jpg"
+      ]
+    },
     frankfurt: {
       kicker: "Editorial · Korean learning · team of 7",
       title: "Ato’s Four Seasons Adventure in Korea",
@@ -581,7 +796,20 @@ html.lb-open { overflow: hidden; }
         "frankfurt/ato-four-seasons-spreads.png"
       ]
     },
-    riso:       { kicker: "Riso · editorial", title: "RISORISO", blurbs: ["A poetry book made with the riso printing club."], facts: [["Year","2023"],["Role","Design and print"]], frames: [] },
+    riso: {
+      kicker: "Riso \u00b7 editorial \u00b7 one of four",
+      title: "RISORISO",
+      blurbs: [
+        "Four of us each took a season, so the set runs to four books: poems written by students in a class, gathered, laid out and printed on a riso. One of the four is mine.",
+        "A riso lays down one colour per pass, so a page is built from a single flat ink and the paper, with halftone carrying everything in between. Each poem keeps its title and the name of whoever wrote it, and the chapters are marked by how far through the book you have come rather than by a number."
+      ],
+      facts: [["Year","2023"],["Set","Four seasonal books, one each"],["Role","Design and print"],["Source","Poems written by students in class"]],
+      flow: true,
+      frames: [
+        { row: ["riso/drum-fluorescent-pink.jpg","riso/press-sheets-teal.jpg"] },
+        { row: ["riso/proofing.jpg","riso/booklet-orange.jpg"] }
+      ]
+    },
     kkol: {
       kicker: "Hangeul lettering · study",
       title: "The Kkol",
@@ -621,11 +849,11 @@ html.lb-open { overflow: hidden; }
         "Geumwang-eup in Eumseong County had tourism resources but little reason for visitors to connect them or stay. For the 19th Korea Rural Planning Competition, we analysed the area’s history and local character through field visits, demographic research, resource mapping and interviews with residents.",
         "Built around a lost guardian dog named Geumwang, the proposal turns scattered attractions into a family stamp tour. Each stop reveals part of the town’s story; an unused local space becomes a rescue-team base with rest areas, activities, equipment rental and completion souvenirs. The aim was to extend dwell time, create an accessible route for families with children, and support local tourism and the economy."
       ],
-      facts: [["Year","2021"],["Competition","19th Korea Rural Planning Competition"],["Result","Selected"],["Scope","Field research, interviews, storytelling, stamp tour"]],
+      facts: [["Year","2021"],["Competition","19th Korea Rural Planning Competition"],["Award","President’s Award · 한국농촌계획학회 학회장상"],["Scope","Field research, interviews, storytelling, stamp tour"]],
       textOnly: true,
       frames: []
     },
-    cookfest:   { kicker: "Advertising · award", title: "NS Cookfest", blurbs: ["An advertising concept made at the Busan International Advertising Festival creative camp. The earliest thing here, and the reason the rest happened."], facts: [["Year","2019"],["Award","Chair's Award"]], frames: [] }
+    cookfest:   { kicker: "Advertising · award", title: "NS Cookfest", blurbs: ["An advertising concept made at the Busan International Advertising Festival creative camp. The earliest thing here, and the reason the rest happened."], facts: [["Year","2019"],["Festival","Busan International Advertising Festival"],["Award","Chair’s Award · 집행위원장상"],["Team","2 members"]], frames: [] }
   };
 
   function pad(n) { return String(n).padStart(2, "0"); }
@@ -775,6 +1003,9 @@ html.lb-open { overflow: hidden; }
           host = document.createElement("div");
           host.className = "pair";
           host.style.setProperty("--n", items.length);
+          // {cols:"…"} overrides the equal split, so two pieces of different
+          // shape can be sized to finish at the same height.
+          if (f.cols) host.style.gridTemplateColumns = f.cols;
           fig.appendChild(host);
         }
 
@@ -782,12 +1013,12 @@ html.lb-open { overflow: hidden; }
           var media = document.createElement("button");
           media.type = "button";
           media.className = "media shot" + (isFit(f) ? " fit" : "");
+          if (isFit(f) && f.bg) media.style.setProperty("--fit-bg", f.bg);
           media.setAttribute("aria-label", "Open frame " + (i + 1) + " of " + frames.length + " full screen");
           media.appendChild(makeMedia(path, i < 2));
           var zoom = document.createElement("span");
           zoom.className = "zoom";
-          zoom.innerHTML = '<span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H4v5M15 20h5v-5M20 9V4h-5M4 15v5h5"/></svg>';
-          zoom.firstChild.textContent = sourceLabel(path);
+          zoom.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H4v5M15 20h5v-5M20 9V4h-5M4 15v5h5"/></svg>';
           media.appendChild(zoom);
           media.addEventListener("click", function () { openLb(i); });
           host.appendChild(media);
@@ -795,7 +1026,7 @@ html.lb-open { overflow: hidden; }
 
         if (caption) {
           var cap = document.createElement("figcaption");
-          cap.innerHTML = '<span class="n">' + pad(i + 1) + "</span>";
+          cap.innerHTML = '<span class="n">' + frameNo(f, i) + "</span>";
           cap.appendChild(document.createTextNode(caption));
           fig.appendChild(cap);
         }
@@ -846,6 +1077,11 @@ html.lb-open { overflow: hidden; }
     return typeof f === "string" ? null : f[1];
   }
   function isVideo(p) { return /\.mp4$/i.test(p); }
+  // {n:"1-2"} labels a frame by hand, for cases whose frames fall into
+  // groups rather than one running sequence. Otherwise it is the position.
+  function frameNo(f, i) {
+    return (f && typeof f === "object" && !Array.isArray(f) && f.n) ? f.n : pad(i + 1);
+  }
 
   // A clip only opens the trailing motion block if nothing but clips follow.
   // One sitting between stills is body content and stays flush with them.
@@ -859,8 +1095,6 @@ html.lb-open { overflow: hidden; }
     return true;
   }
 
-  // "clap/ux-01" — the path is the name, so a frame can be pointed at exactly.
-  function sourceLabel(p) { return p.replace(/\.[a-z0-9]+$/i, ""); }
 
   // A frame is a path under assets/. .mp4 comes back as a looping muted video
   // so motion pieces sit in the reel exactly like a still would.
@@ -955,6 +1189,7 @@ html.lb-open { overflow: hidden; }
         host = document.createElement("div");
         host.className = "pair";
         host.style.setProperty("--n", items.length);
+        if (f.cols) host.style.gridTemplateColumns = f.cols;
         fig.appendChild(host);
       }
       // Around the entry point loads now; the rest waits for the scroll.
@@ -963,6 +1198,7 @@ html.lb-open { overflow: hidden; }
         if (isFit(f)) {
           var box = document.createElement("span");
           box.className = "media fit";
+          if (f.bg) box.style.setProperty("--fit-bg", f.bg);
           box.appendChild(m);
           host.appendChild(box);
         } else {
@@ -973,7 +1209,7 @@ html.lb-open { overflow: hidden; }
       var cap = frameCap(f);
       if (cap) {
         var fc = document.createElement("figcaption");
-        fc.innerHTML = '<span class="n">' + pad(i + 1) + "</span>";
+        fc.innerHTML = '<span class="n">' + frameNo(f, i) + "</span>";
         fc.appendChild(document.createTextNode(cap));
         fig.appendChild(fc);
       }

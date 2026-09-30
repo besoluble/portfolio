@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" width="1200" height="430" role="img">
+<rect width="1200" height="430" fill="#ffffff"/>
+<text x="48.0" y="56.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" font-weight="600" fill="#1b2026" text-anchor="start">Chat submissions, second round</text>
+<text x="48.0" y="84.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#8b9098" text-anchor="start">Share of people who were shown the toolbar and went on to send a question, 31 March – 20 April</text>
+<rect x="200" y="112" width="12" height="12" rx="2" fill="#2a78d6"/>
+<text x="220.0" y="122.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">New users</text>
+<rect x="330" y="112" width="12" height="12" rx="2" fill="#eb6834"/>
+<text x="350.0" y="122.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">Existing users</text>
+<text x="150.0" y="190.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#1b2026" text-anchor="end">A — control</text>
+<path d="M200.0 160.0 H524.0 Q528.0 160.0 528.0 164.0 V178.0 Q528.0 182.0 524.0 182.0 H200.0 Z" fill="#2a78d6"/>
+<path d="M200.0 184.0 H753.6 Q757.6 184.0 757.6 188.0 V202.0 Q757.6 206.0 753.6 206.0 H200.0 Z" fill="#eb6834"/>
+<text x="150.0" y="266.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#1b2026" text-anchor="end">B — hover to reveal</text>
+<path d="M200.0 236.0 H429.7 Q433.7 236.0 433.7 240.0 V254.0 Q433.7 258.0 429.7 258.0 H200.0 Z" fill="#2a78d6"/>
+<path d="M200.0 260.0 H663.4 Q667.4 260.0 667.4 264.0 V278.0 Q667.4 282.0 663.4 282.0 H200.0 Z" fill="#eb6834"/>
+<text x="150.0" y="342.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#1b2026" text-anchor="end">C — row in the list</text>
+<path d="M200.0 312.0 H798.7 Q802.7 312.0 802.7 316.0 V330.0 Q802.7 334.0 798.7 334.0 H200.0 Z" fill="#2a78d6"/>
+<path d="M200.0 336.0 H872.5 Q876.5 336.0 876.5 340.0 V354.0 Q876.5 358.0 872.5 358.0 H200.0 Z" fill="#eb6834"/>
+<text x="48.0" y="404.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">Hover made it worse than doing nothing. Giving chat the same shape as its neighbours nearly doubled it.</text>
+</svg>

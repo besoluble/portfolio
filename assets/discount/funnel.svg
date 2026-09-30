@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" width="1200" height="430" role="img">
+<rect width="1200" height="430" fill="#ffffff"/>
+<text x="48.0" y="56.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" font-weight="600" fill="#1b2026" text-anchor="start">Before and after the offer moved into the modal</text>
+<text x="48.0" y="84.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#8b9098" text-anchor="start">Within 24 hours of a person’s first sight of the modal. Five days each side, matched by weekday.</text>
+<rect x="310" y="112" width="12" height="12" rx="2" fill="#eb6834"/>
+<text x="330.0" y="122.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">Before · 17–21 Sept</text>
+<rect x="500" y="112" width="12" height="12" rx="2" fill="#2a78d6"/>
+<text x="520.0" y="122.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">After · 24–28 Sept</text>
+<text x="260.0" y="190.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#1b2026" text-anchor="end">Opened checkout</text>
+<path d="M310.0 160.0 H736.1 Q740.1 160.0 740.1 164.0 V178.0 Q740.1 182.0 736.1 182.0 H310.0 Z" fill="#eb6834"/>
+<path d="M310.0 184.0 H921.4 Q925.4 184.0 925.4 188.0 V202.0 Q925.4 206.0 921.4 206.0 H310.0 Z" fill="#2a78d6"/>
+<text x="1106.0" y="190.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">+9.00%p</text>
+<text x="260.0" y="266.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#1b2026" text-anchor="end">Started a subscription</text>
+<path d="M310.0 236.0 H501.4 Q505.4 236.0 505.4 240.0 V254.0 Q505.4 258.0 501.4 258.0 H310.0 Z" fill="#eb6834"/>
+<path d="M310.0 260.0 H616.1 Q620.1 260.0 620.1 264.0 V278.0 Q620.1 282.0 616.1 282.0 H310.0 Z" fill="#2a78d6"/>
+<text x="1106.0" y="266.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">+5.57%p</text>
+<text x="260.0" y="342.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="400" fill="#1b2026" text-anchor="end">Paid, and kept it</text>
+<path d="M310.0 312.0 H374.6 Q378.6 312.0 378.6 316.0 V330.0 Q378.6 334.0 374.6 334.0 H310.0 Z" fill="#eb6834"/>
+<path d="M310.0 336.0 H481.8 Q485.8 336.0 485.8 340.0 V354.0 Q485.8 358.0 481.8 358.0 H310.0 Z" fill="#2a78d6"/>
+<text x="1106.0" y="342.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="end">+5.21%p</text>
+<text x="48.0" y="404.0" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" fill="#5e646b" text-anchor="start">Exposure roughly halved across the two windows, so the rates compare and the counts do not.</text>
+</svg>
