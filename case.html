@@ -461,6 +461,49 @@ html.lb-open { overflow: hidden; }
 </dialog>
 
 <script>
+  function mediaSettled(el) {
+    return el.tagName === "VIDEO" ? el.readyState >= 2 : (el.complete && el.naturalWidth > 0);
+  }
+  function onMediaSettle(el, cb) {
+    el.addEventListener(el.tagName === "VIDEO" ? "loadeddata" : "load", cb, { once: true });
+    el.addEventListener("error", cb, { once: true });
+  }
+
+  // Reveal a whole group at once. Images arriving one by one as you scroll
+  // reads as a page still being built, so the shimmer holds every frame until
+  // the last one has decoded and then they all land together. If the wait runs
+  // long we stop holding them hostage and let each land as it arrives.
+  function revealTogether(scope, budget) {
+    var boxes = [].slice.call(scope.querySelectorAll(".media"));
+    var els = [].slice.call(scope.querySelectorAll(".media img, .media video"));
+    if (!els.length) { boxes.forEach(function (m) { m.classList.add("ready"); }); return; }
+
+    var left = els.length, settled = false, timer = null;
+    function flipAll() {
+      if (settled) return;
+      settled = true; clearTimeout(timer);
+      boxes.forEach(function (m) { m.classList.add("ready"); });
+    }
+    function giveUp() {
+      if (settled) return;
+      settled = true;
+      els.forEach(function (el) {
+        var host = el.closest(".media");
+        if (!host) return;
+        if (mediaSettled(el)) host.classList.add("ready");
+        else onMediaSettle(el, function () { host.classList.add("ready"); });
+      });
+    }
+    els.forEach(function (el) {
+      if (el.dataset.wired) { left--; return; }
+      el.dataset.wired = "1";
+      if (mediaSettled(el)) { if (--left <= 0) flipAll(); return; }
+      onMediaSettle(el, function () { if (--left <= 0) flipAll(); });
+    });
+    if (left <= 0) flipAll();
+    else timer = setTimeout(giveUp, budget || 12000);
+  }
+
   // Hold a shimmer in the frame until the file has decoded, then let it fade
   // in. Runs for anything inside a .media, however that media got there.
   function wireMedia(root) {
@@ -630,7 +673,7 @@ html.lb-open { overflow: hidden; }
         "97% of donations go to the largest organisations. Small donors compare themselves to celebrity-sized gifts and stop believing their part counts, so they stop giving.",
         "C!ap turns the donor from patron into participant. Thirty-nine small non-profits sorted so what each one does is legible before you commit, and a flow that does not stop at the payment: your name lands on the organisation's page, the people who gave there can clap for it, and a thank-you letter comes back. We ran the matching for real and 14 of the participants donated."
       ],
-      facts: [["Year","2024"],["Type","Personal work, team project"],["Team","4 members"],["My part","Brand strategy 100 · Brand design 80 · UI 50 · UX 25"],["Reach","39 organisations covered, 14 people gave"]],
+      facts: [["Year","2024"],["Type","Personal work, team project"],["Team","4 members"],["My part","Brand strategy · brand design · UI · UX"],["Reach","39 organisations covered, 14 people gave"]],
       link: { href: "https://www.behance.net/gallery/209388873/Cap", label: "See it on Behance" },
       flow: true,
       tracks: [
@@ -645,7 +688,7 @@ html.lb-open { overflow: hidden; }
         "Customers kept asking why the shop sells hangers but no clothes, and whether the page was broken. The umbrella structure was never explained anywhere on the site.",
         "The gap was not missing information. Nobody could say why this brand had picked these products. I analysed the seven brands already stocked, found the three criteria running underneath, and turned them into a card module that repeats everywhere."
       ],
-      facts: [["Year","2024"],["Client","MagicWrap Co., practical brief"],["Status","Proposal, not adopted"],["Team","5 members, 2 weeks"],["My part","Rebranding proposal 100 · UI, onboarding 20"]],
+      facts: [["Year","2024"],["Client","MagicWrap Co., practical brief"],["Status","Proposal, not adopted"],["Team","5 members, 2 weeks"],["My part","Rebranding proposal · UI and onboarding"]],
       flow: true,
       // p67 and p69 are the still versions of the first two clips, so the
       // clips take their places. The third sits where it did on the site.
@@ -1074,7 +1117,7 @@ html.lb-open { overflow: hidden; }
       });
       if (det) reel.appendChild(det);
       document.getElementById("progress").hidden = false;
-      wireMedia(reel);
+      revealTogether(reel, 12000);
     } else if (w.textOnly) {
       reel.hidden = true;
       document.getElementById("progress").hidden = true;
@@ -1158,7 +1201,7 @@ html.lb-open { overflow: hidden; }
     var img = document.createElement("img");
     img.src = "assets/" + path;
     img.alt = "";
-    img.loading = eager ? "eager" : "lazy";
+    img.loading = "eager";   // the reel waits for all of them anyway
     return img;
   }
 
